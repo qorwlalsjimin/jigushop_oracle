@@ -1,0 +1,106 @@
+/* footer */
+/* num_info */
+.num_info .text,
+.num_info strong {
+    color: #646464;
+    font-size: 16px;
+}
+
+.num_info .text_title {
+    color: #646464;
+    font-size: 24px;
+}
+
+/* //num_info */
+
+/* under_info */
+.under_info {
+    display: flex;
+}
+
+.under_info .right .text_title {
+    color: #646464;
+    font-weight: normal;
+}
+
+.under_info .store {
+    width: 16%;
+}
+
+.under_info .text_title {
+    color: #00913a;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.under_info .left .line {
+    margin: 0px;
+    border-bottom: 1px solid #00913a;
+    margin-bottom: 8px;
+}
+
+.under_info .right .line {
+    margin: 0px;
+    border-bottom: 1px solid #646464;
+    margin-bottom: 8px;
+}
+
+.under_info .text,
+.under_info strong {
+    color: #646464;
+    font-size: 14px;
+}
+
+.under_info .right a{
+    text-decoration: none;
+    color: #646464;
+}
+
+.under_info .right a:hover{
+    color: #00913a;
+}
+
+/* //under_info */
+
+/* last_info */
+.last_info {
+    background-color: #00913a;
+}
+
+.last_info .container {
+    display: flex;
+}
+
+.last_info .right ul {
+    font-size: 16px;
+    display: flex;
+    padding: 0px;
+}
+
+.last_info .right .etc {
+    font-size: 15px;
+    line-height: 160%;
+}
+
+.last_info .right p {
+    color: white;
+}
+
+.last_info a {
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color: #00913a;
+}
+
+.last_info a:hover{
+    color: #00913a;
+}
+
+.last_info span {
+    color: white;
+}
+
+/* //last_info */
+/* //footer */

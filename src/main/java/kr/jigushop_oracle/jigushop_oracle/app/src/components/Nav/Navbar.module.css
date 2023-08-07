@@ -1,0 +1,78 @@
+/* nav */
+/* top_nav */
+.top_nav .nav_nav {
+    text-align: right;
+}
+
+.top_nav .nav_nav span {
+    color: #00913a;
+    font-size: 16px;
+}
+
+.top_nav a {
+    text-decoration: none;
+}
+
+.top_nav i {
+    color: #00913a;
+}
+
+.top_nav a:hover span,
+.top_nav a:hover i {
+    color: #656565;
+}
+
+/*main_nav*/
+.main_nav .left_nav>a {
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.main_nav .left_nav span {
+    color: #00913a;
+}
+
+.main_nav .left_nav a:hover span {
+    color: #dadada;
+}
+
+.main_nav .right_nav {
+    text-align: right;
+    font-size: 16px;
+}
+
+.main_nav .right_nav a,
+span {
+    text-decoration: none;
+    color: #646464;
+}
+
+.main_nav .right_nav a:hover span {
+    color: #00913a;
+}
+
+.main_nav .search_area {
+    width: 200px;
+    height: 34px;
+}
+
+/*검색창*/
+.main_nav .search_type {
+    width: 200px;
+    height: 34px;
+    border: 1px solid #dadada;
+    border-radius: 20px;
+}
+
+.main_nav input {
+    width: 160px;
+    border: none;
+    background-color: transparent;
+}
+
+.main_nav input::placeholder {
+    font-size: 14px;
+    color: #aeaeae;
+}
+
+/* //nav */

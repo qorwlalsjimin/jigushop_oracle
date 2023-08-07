@@ -1,0 +1,5 @@
+    /* main */
+    main .carouselExampleControls .carousel-inner .carousel-item img {
+        /*이미지를 어케.. 크게 할까*/
+        overflow: hidden;
+    }

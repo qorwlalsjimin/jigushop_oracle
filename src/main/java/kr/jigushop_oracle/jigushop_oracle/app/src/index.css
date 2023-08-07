@@ -7,6 +7,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  /*목록의 점 없애기*/
+  list-style: none;
+  
+  /*테이블 선 붙여줌*/
+  border-collapse: collapse;
+
+  margin: 0px;
+  padding: 0px;
+
+  /*기본 폰트*/
+  color: #000;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

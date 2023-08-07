@@ -17,10 +17,10 @@ public class BoardController {
     BoardServiceImpl boardService;
 
     //index
-    @GetMapping("/")
-    public String home(){
-        return "index";
-    }
+//    @GetMapping("/")
+//    public String home(){
+//        return "index";
+//    }
 
     //게시판 목록
     @GetMapping("/list")

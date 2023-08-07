@@ -1,0 +1,27 @@
+/* content1 */
+.content1 .left p,
+.content3 .left p {
+    font-size: 15px;
+}
+
+.content1 .left_text,
+.content3 .left_text {
+    font-size: 14px;
+}
+
+.content1 .left {
+    display: flex;
+}
+
+.left .left_img{
+    text-align: right;
+}
+
+.bundry1,
+.bundry2 {
+    display: flex;
+}
+
+.BESTicon, .NEWicon, .SALEicon{
+    font-size: 14px;
+}

@@ -1,24 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home/Home';
+import ItemList from './pages/ItemList/ItemList';
+import Board from './pages/Board/Board';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginPage from './pages/LoginPage/LoginPage';
+import JoinPage from './pages/JoinPage/JoinPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* 메인 */}
+        <Route path="/" element={<Home />} />
+
+        {/* 상품 목록 */}
+        <Route path="/item_list" element={<ItemList />} />
+        <Route path="/board" element={<Board />} />
+
+        {/* 로그인, 회원가입 */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/join" element={<JoinPage />} />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
