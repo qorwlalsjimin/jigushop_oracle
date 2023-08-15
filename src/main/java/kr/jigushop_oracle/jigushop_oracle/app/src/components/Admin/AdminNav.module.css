@@ -1,0 +1,54 @@
+.flex{
+    display: flex;
+    align-items: flex-end;
+}
+
+.admintext{
+    font-size: 2em;
+    font-weight: bold;
+    color: #039c00;
+    margin: 0 0.5em 0 0;
+    text-decoration: none;
+}
+
+.small_text{
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #757575;
+    margin: 0 0 0.1em 0.5em;
+    transition: all 0.3s ease-in-out;
+}
+
+.small_text:hover{
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #ffdd00;
+    margin: 0 0 0.1em 0.5em;
+}
+
+.hidden{
+    display: none;
+}
+
+.logout_nav{
+    background-color: #039c00;
+}
+
+.function{
+    margin-left: 1em;
+}
+
+.yellow_text{
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #ffae00;
+    margin: 0 0 0.1em 0.5em;
+    transition: all 0.3s ease-in-out;
+}
+
+.yellow_text:hover{
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #039c00;
+    margin: 0 0 0.1em 0.5em;
+}
