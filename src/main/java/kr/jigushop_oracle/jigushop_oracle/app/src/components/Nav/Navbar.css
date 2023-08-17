@@ -1,0 +1,33 @@
+.nav_nav, .search_area{
+    text-align: right;
+}
+
+.nav_nav a, .left_nav a{
+    text-decoration: none;
+}
+
+span {
+    color: #07913a;
+    font-size: 18px;
+}
+
+.active {
+    color: yellow;
+}
+
+
+
+.search_area input{
+    border-radius: 67px;
+    border: 1px solid #cdcdcd;
+    background: #FFF;
+    height: 35px;
+}
+
+.search_area input::placeholder{
+    color: #cdcdcd;
+}
+
+.magnifying_glass_icon{
+    margin-left: -30px;
+}

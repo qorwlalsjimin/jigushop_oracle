@@ -7,6 +7,7 @@ export default function Footer() {
 
     return (
         <footer className={`${style.footer}`}>
+            <hr />
             <Container className='py-3'>
                 <Row>
                     <Col md={3}>

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function JoinForm() {
     return (
-        <div className="join container">
+        <div className="join container mb-5 pb-5">
             <form className="w-100" method="post" action="join_process.php">
                 <div className="mt-5 mb-1 row justify-content-lg-center">
                     <div className="mb-3 col-sm-12 col-lg-6 row">

@@ -5,6 +5,7 @@ import Board from './pages/Board/Board';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import JoinPage from './pages/JoinPage/JoinPage';
+import Cart from './pages/Cart/Cart';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         {/* 로그인, 회원가입 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/join" element={<JoinPage />} />
+
+        {/* 장바구니 */}
+        <Route path="/cart" element={<Cart />} />
 
       </Routes>
     </BrowserRouter>
