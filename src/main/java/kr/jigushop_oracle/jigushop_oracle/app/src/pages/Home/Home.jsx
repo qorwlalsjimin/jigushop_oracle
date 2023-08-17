@@ -4,7 +4,6 @@ import MainDisplayBest from "../../components/Home/MainDisplayBest/MainDisplayBe
 import MainDisplayMission from "../../components/Home/MainDisplayMission/MainDisplayMission";
 import MainDisplayNew from "../../components/Home/MainDisplayNew/MainDisplayNew";
 import MainDisplayNews from "../../components/Home/MainDisplayNews/MainDisplayNews";
-import MainDisplaySNS from "../../components/Home/MainDisplaySNS/MainDisplaySNS";
 import Nav from "../../components/Nav/Nav";
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
             <MainDisplayNews/>
             <MainDisplayNew/>
             <MainDisplayMission/>
-            <MainDisplaySNS />
             <hr style={homeStyles} />
             
             <Footer/>

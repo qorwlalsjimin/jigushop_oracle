@@ -1,27 +1,33 @@
-/* content1 */
-.content1 .left p,
-.content3 .left p {
-    font-size: 15px;
+.sharp_text{
+    color: #646464;
+    font-size: 20px;
 }
 
-.content1 .left_text,
-.content3 .left_text {
-    font-size: 14px;
+.desc_text{
+    color: #646464;
+    font-size: 16px;
 }
 
-.content1 .left {
-    display: flex;
+.title_text{
+    font-size: 16px;
+    color: #646464;
 }
 
-.left .left_img{
-    text-align: right;
+.price_text{
+    font-size: 16px;
 }
 
-.bundry1,
-.bundry2 {
-    display: flex;
+.best_text{
+    color: #FE5356;
+    border: 0.5px solid #c8c8c8;
+    font-size: 13px;
+    padding: 2px 8px;
 }
 
-.BESTicon, .NEWicon, .SALEicon{
-    font-size: 14px;
+.sale_text{
+    background-color: #FE5356;
+    border: 0.5px solid #FE5356;
+    color: white;
+    font-size: 13px;
+    padding: 2px 8px;
 }

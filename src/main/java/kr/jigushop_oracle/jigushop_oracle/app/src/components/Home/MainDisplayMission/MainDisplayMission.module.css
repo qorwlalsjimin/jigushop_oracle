@@ -1,37 +1,22 @@
 /* content4 */
-.content4 {
+.content {
     background-color: #00913a;
     text-align: center;
 }
 
-.content4_title {
+.content_title {
     color: white;
     font-weight: bold;
     font-size: 28px;
 }
 
-.content4 .content4_contents {
-    display: flex;
-}
-
-.content4_left,
-.content4_right,
-.content4_midst {
-    background-color: white;
-    border-radius: 15px;
-}
-
-.content4 strong {
-    font-size: 18px;
-}
-
-.content4 .text {
+.text {
     font-size: 18px;
     text-align: center;
     color: #00913a;
 }
 
-.content4 .text_value {
+.text_value {
     font-size: 36px;
     font-weight: bold;
 }
