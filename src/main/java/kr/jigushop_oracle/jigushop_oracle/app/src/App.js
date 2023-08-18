@@ -5,12 +5,7 @@ import Board from './pages/Board/Board';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import JoinPage from './pages/JoinPage/JoinPage';
-import AdminLogin from './pages/Admin/AdminLogin';
-import AdminJoin from './pages/Admin/AdminJoin';
-import AdminItem from './pages/Admin/AdminItem';
-import AdminChart from './pages/Admin/AdminChart';
-import AdminItemList from './pages/Admin/AdminIndex';
-import AdminIndex from './pages/Admin/AdminIndex';
+import Cart from './pages/Cart/Cart';
 
 function App() {
   return (
@@ -27,12 +22,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/join" element={<JoinPage />} />
 
-        {/* 관리자 */}
-        <Route path="/admin" element={<AdminIndex/>}/>
-        <Route path="/admin_login" element={<AdminLogin/>}/>
-        <Route path="/admin_join" element={<AdminJoin/>}/>
-        <Route path="/add" element={<AdminItem/>}/>
-        <Route path="/chart" element={<AdminChart/>}/>
+        {/* 장바구니 */}
+        <Route path="/cart" element={<Cart />} />
 
       </Routes>
     </BrowserRouter>

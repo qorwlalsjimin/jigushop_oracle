@@ -1,27 +1,18 @@
-/* content1 */
-.content1 .left p,
-.content3 .left p {
-    font-size: 15px;
+.sharp_text{
+    color: #646464;
+    font-size: 20px;
 }
 
-.content1 .left_text,
-.content3 .left_text {
-    font-size: 14px;
+.desc_text{
+    color: #646464;
+    font-size: 16px;
 }
 
-.content1 .left {
-    display: flex;
+.title_text{
+    font-size: 16px;
+    color: #646464;
 }
 
-.left .left_img{
-    text-align: right;
-}
-
-.bundry1,
-.bundry2 {
-    display: flex;
-}
-
-.BESTicon, .NEWicon, .SALEicon{
-    font-size: 14px;
+.price_text{
+    font-size: 16px;
 }
