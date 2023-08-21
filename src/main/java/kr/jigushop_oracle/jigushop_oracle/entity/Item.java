@@ -3,6 +3,8 @@ package kr.jigushop_oracle.jigushop_oracle.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 
@@ -34,8 +36,17 @@ public class Item {
     private String img;
     private Long price;
 
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private char best;
+
+
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private char sale;
+
     @Builder
-    public Item(Long itemId, Long categoryId, String itemName, String brand, String itemOption, String itemDesc, String img, Long price) {
+    public Item(Long itemId, Long categoryId, String itemName, String brand, String itemOption, String itemDesc, String img, Long price, char best, char sale) {
         this.itemId = itemId;
         this.categoryId = categoryId;
         this.itemName = itemName;
@@ -44,5 +55,7 @@ public class Item {
         this.itemDesc = itemDesc;
         this.img = img;
         this.price = price;
+        this.best = best;
+        this.sale = sale;
     }
 }
