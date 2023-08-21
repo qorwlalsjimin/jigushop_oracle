@@ -118,7 +118,7 @@ export default function AdminEditForm({ idProps }) {
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">카테고리</label>
                             <select className="form-select" required name="categoryId"
-                                    value={item.categoryId.categoryId} onChange={handleChanges} >
+                                    value={item.categoryId} onChange={handleChanges} >
                                 <option disabled>카테고리를 선택해주세요</option>
                                 <option value="101">욕실</option>
                                 <option value="102">주방</option>

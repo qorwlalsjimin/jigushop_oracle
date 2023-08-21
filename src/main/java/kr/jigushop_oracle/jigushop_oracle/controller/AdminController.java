@@ -32,7 +32,8 @@ public class AdminController {
     @GetMapping("/items")
     public Collection<Item> selectAllItems(){
         System.out.println("관리자: 상품 조회 get");
-        adminService.initialize();
+//        adminService.initialize();
+        System.out.println(adminService.adminListAll().toArray().length);
         return adminService.adminListAll();
     }
 

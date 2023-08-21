@@ -5,20 +5,20 @@ import axios from "axios";
 
 export default function AdminItemList() {
     // 상품 목록
-    let [items, setItems] = useState([]);
-    
-    const navigate = useNavigate();
+    const [items, setItems] = useState([]);
 
+    const navigate = useNavigate();
 
     const handleLinkClick = async (itemId) => {
         try {
             console.log("클릭!")
-    
+
             const response = await axios.delete(`/api/admin/delete_item/${itemId}`);
-    
+
             if (response.status === 200) {
                 console.log("상품 삭제 성공");
-                navigate("/");
+                // 삭제 후 상태 업데이트
+                setItems(prevItems => prevItems.filter(item => item.itemId !== itemId));
             }
         } catch (error) {
             console.error(error);
@@ -33,7 +33,7 @@ export default function AdminItemList() {
                     headers: {}
                 });
                 setItems(response.data);
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -69,7 +69,7 @@ export default function AdminItemList() {
                                 <td>{item.itemOption}</td>
                                 <td>{item.itemDesc}</td>
                                 <td>{item.price}원</td>
-                                <td>{item.categoryId.categoryId}번</td>
+                                <td>{item.categoryId}번</td>
                                 <td>
                                     <Link to={`/admin_form?class=edit&id=${item.itemId}`}>수정</Link> |
                                     <Link onClick={() => handleLinkClick(item.itemId)}> 삭제</Link>

@@ -6,15 +6,17 @@ import { useNavigate } from "react-router-dom";
 export default function AdminAddForm() {
     const navigate = useNavigate();
 
-    const [item, setItem] = useState({
+    const initialItem = {
         itemName: "",
         brand: "",
         itemOption: "",
         itemDesc: "",
         img: "",
         price: "",
-        categoryId: ""
-    });
+        categoryId: 101
+    };
+
+    const [item, setItem] = useState(initialItem);
 
     const handleChanges = (event) => {
         const { name, value } = event.target;
@@ -22,8 +24,6 @@ export default function AdminAddForm() {
             ...prevItem,
             [name]: value
         }));
-        console.log(name)
-        console.log(value)
     };
 
     const handleSubmit = async (event) => {
