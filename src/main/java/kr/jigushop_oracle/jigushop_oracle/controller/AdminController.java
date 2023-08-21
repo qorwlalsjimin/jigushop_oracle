@@ -1,7 +1,7 @@
 package kr.jigushop_oracle.jigushop_oracle.controller;
 
-import kr.jigushop_oracle.jigushop_oracle.dto.ItemForm;
-import kr.jigushop_oracle.jigushop_oracle.entity.Category;
+import kr.jigushop_oracle.jigushop_oracle.dto.AdminLoginForm;
+import kr.jigushop_oracle.jigushop_oracle.entity.AdminInfo;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import kr.jigushop_oracle.jigushop_oracle.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,31 @@ public class AdminController {
 
     @Autowired
     AdminService adminService;
+
+    //로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AdminLoginForm adminInfo){
+        System.out.println(adminInfo);
+        boolean isLogin = adminService.login(adminInfo);
+
+        if(isLogin)
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //401
+
+    }
+
+    //회원가입
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody AdminInfo adminInfo){
+        boolean isJoin = adminService.join(adminInfo);
+
+        if(isJoin)
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //401
+    }
+
 
     // 상품 초기화
     @GetMapping("/init")

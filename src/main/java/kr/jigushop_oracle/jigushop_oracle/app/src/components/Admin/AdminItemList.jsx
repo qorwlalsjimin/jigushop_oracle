@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from "axios";
+import Cookies from 'js-cookie';
+import AdminNotice from "./AdminNotice";
+
 
 export default function AdminItemList() {
     // 상품 목록
     const [items, setItems] = useState([]);
+
+    const [isLogin, setIsLogin] = useState(Cookies.get('loggedIn') === 'true');
 
     const navigate = useNavigate();
 
@@ -50,8 +55,7 @@ export default function AdminItemList() {
     }, []);
 
     return (
-        <>
-            <Container className={`text-center my-5`}>
+        <Container className={`text-center my-5`}>
                 <Row className={`m-5 text-success`}>
                     <h1>등록된 상품</h1>
                 </Row>
@@ -87,7 +91,6 @@ export default function AdminItemList() {
                 </table>
 
                 <Link to="/admin_form?class=add" className={`float-end mb-5 pb-5`}>상품 등록하기</Link>
-            </Container>
-        </>
+        </Container>
     )
 }

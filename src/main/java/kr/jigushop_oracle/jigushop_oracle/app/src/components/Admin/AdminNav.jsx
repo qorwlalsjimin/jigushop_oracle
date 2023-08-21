@@ -2,10 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from "./AdminNav.module.css";
+import Cookies from 'js-cookie';
 
 export default function AdminNav() {
 
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(Cookies.get('loggedIn') === 'true');
+    console.log(isLogin);
+    
+    const handleLogout = () => {
+        Cookies.remove('loggedIn'); // loggedIn 쿠키 제거
+        setIsLogin(false); // 로그인 상태 업데이트
+        console.log(isLogin);
+
+    };
 
     return (
         <>
@@ -21,7 +30,7 @@ export default function AdminNav() {
                 </div>
                 <div className={`${!isLogin ? styles.hidden : styles.flex} ${styles.flexContainer}`}>
                     <div>
-                        <Link to="/admin_logout" className={styles.small_text}>로그아웃</Link>
+                        <span onClick={handleLogout} className={styles.small_text}>로그아웃</span>
                     </div>
                     <div className={styles.function}>
                         <Link to="/admin_form?class=add" className={styles.yellow_text}>등록</Link>

@@ -1,24 +1,25 @@
 package kr.jigushop_oracle.jigushop_oracle.service;
 
+import kr.jigushop_oracle.jigushop_oracle.dao.AdminInfoRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.AdminRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.CategoryRepository;
-import kr.jigushop_oracle.jigushop_oracle.dto.ItemForm;
+import kr.jigushop_oracle.jigushop_oracle.dto.AdminLoginForm;
+import kr.jigushop_oracle.jigushop_oracle.entity.AdminInfo;
 import kr.jigushop_oracle.jigushop_oracle.entity.Category;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class AdminService {
 
     @Autowired AdminRepository adminRepository;
     @Autowired CategoryRepository categoryRepository;
+    @Autowired AdminInfoRepository adminInfoRepository;
 
     public Collection<Item> adminListAll() {
         return adminRepository.findAllNative();
@@ -314,5 +315,23 @@ public class AdminService {
 //        Arrays.stream(categorys).forEach(category -> categoryRepository.save(category));
         Arrays.stream(items).forEach(item -> adminRepository.save(item));
 
+    }
+
+    public boolean login(AdminLoginForm adminInfo) {
+        AdminInfo dbInfo = adminInfoRepository.findByIdNative(adminInfo.getAdminUid());
+
+        if(dbInfo == null) return false;
+        System.out.println(adminInfo.getAdminUpw());
+        System.out.println(dbInfo.getAdminUpw());
+        if(adminInfo.getAdminUpw().equals(dbInfo.getAdminUpw()))
+            return true;
+        else
+            return false;
+    }
+
+    @Transactional
+    public boolean join(AdminInfo adminInfo) {
+        int isSave = adminInfoRepository.saveAdminInfo(adminInfo);
+        return isSave>0 ? true : false;
     }
 }
