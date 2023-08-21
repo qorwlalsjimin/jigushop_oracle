@@ -18,10 +18,21 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
+    // 상품 초기화
+    @GetMapping("/init")
+    public Collection<Item> init(){
+        System.out.println("관리자: 상품 초기화");
+        adminService.initialize();
+        return adminService.adminListAll();
+    }
+
+
+
     // 상품 목록 조회
     @GetMapping("/items")
     public Collection<Item> selectAllItems(){
         System.out.println("관리자: 상품 조회 get");
+        adminService.initialize();
         return adminService.adminListAll();
     }
 

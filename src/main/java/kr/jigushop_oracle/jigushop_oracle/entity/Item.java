@@ -1,21 +1,25 @@
 package kr.jigushop_oracle.jigushop_oracle.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Item {
     @Id
     @SequenceGenerator(name = "item_seq", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-
-    @ManyToOne
-    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId", nullable = false)
-    private Category categoryId;
+    @JoinColumn(
+            table = "category",
+            name = "categoryId",
+            referencedColumnName = "categoryId")
+    private Long categoryId;
 
     @Column(nullable = false)
     private String itemName;
@@ -28,4 +32,16 @@ public class Item {
     private String itemDesc;
     private String img;
     private Long price;
+
+    @Builder
+    public Item(Long itemId, Long categoryId, String itemName, String brand, String itemOption, String itemDesc, String img, Long price) {
+        this.itemId = itemId;
+        this.categoryId = categoryId;
+        this.itemName = itemName;
+        this.brand = brand;
+        this.itemOption = itemOption;
+        this.itemDesc = itemDesc;
+        this.img = img;
+        this.price = price;
+    }
 }
