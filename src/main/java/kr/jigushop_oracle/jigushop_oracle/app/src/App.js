@@ -11,6 +11,7 @@ import AdminLogin from './pages/Admin/AdminLogin';
 import AdminJoin from './pages/Admin/AdminJoin';
 import AdminItem from './pages/Admin/AdminItem';
 import AdminChart from './pages/Admin/AdminChart';
+import ItemDetail from './pages/ItemDetail/ItemDetail';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         {/* 상품 목록 */}
         <Route path="/item_list" element={<ItemList />} />
         <Route path="/board" element={<Board />} />
+
+        {/* 상품 상세 */}
+        <Route path="/item/:itemId" element={<ItemDetail />} />
 
         {/* 로그인, 회원가입 */}
         <Route path="/login" element={<LoginPage />} />
