@@ -22,13 +22,15 @@ export default function AdminAddForm() {
             ...prevItem,
             [name]: value
         }));
+        console.log(name)
+        console.log(value)
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(item);
         try {
             const response = await axios.post(`/api/admin/add_item`, item, {});
-
             setTimeout(() => {
                 alert(`'${item.itemName}' 상품 등록이 정상적으로 처리되었습니다.`);
                 navigate("/admin");

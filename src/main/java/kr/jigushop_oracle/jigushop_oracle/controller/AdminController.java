@@ -54,6 +54,7 @@ public class AdminController {
     // 상품 등록하기
     @PostMapping("/add_item")
     public ResponseEntity<Item> addOneItems(@RequestBody Item itemForm){
+        System.out.println(itemForm);
         System.out.println("관리자: 상품 하나 추가 post");
 //        Category category = adminService.findCategoryById(itemForm.getCategoryId().getCategoryId());
 //        itemForm.setCategoryId(category);

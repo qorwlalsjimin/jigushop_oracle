@@ -15,10 +15,11 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-    @JoinColumn(
-            table = "category",
-            name = "categoryId",
-            referencedColumnName = "categoryId")
+//    @JoinColumn(
+//            table = "category",
+//            name = "categoryId",
+//            referencedColumnName = "categoryId")
+    @Column(nullable = false)
     private Long categoryId;
 
     @Column(nullable = false)
