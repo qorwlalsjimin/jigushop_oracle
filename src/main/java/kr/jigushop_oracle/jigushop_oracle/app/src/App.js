@@ -41,6 +41,9 @@ function App() {
         {/* 장바구니 */}
         <Route path="/cart" element={<Cart />} />
 
+        {/* 마이페이지 */}
+        <Route path="/mypage" element={<Cart />} />
+
       </Routes>
     </BrowserRouter>
   );

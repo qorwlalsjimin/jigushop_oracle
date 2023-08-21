@@ -31,3 +31,12 @@ span {
 .magnifying_glass_icon{
     margin-left: -30px;
 }
+
+
+.hidden{
+    display: none;
+}
+
+.logout_text{
+    cursor: pointer;
+}

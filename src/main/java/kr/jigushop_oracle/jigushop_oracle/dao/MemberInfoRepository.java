@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> {
     @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO member VALUES (:#{#member.memberUid}, :#{#member.memberUpw}, :#{#member.memberName}, :#{#member.phone}, :#{#member.gener}, CURRENT_TIMESTAMP")
-    int saveAdminInfo(@Param("member") MemberInfo member);
+    @Query(nativeQuery = true, value = "INSERT INTO member_info VALUES (:#{#member.memberUid}, :#{#member.memberUpw}, :#{#member.memberName}, :#{#member.phone}, :#{#member.gender}, CURRENT_TIMESTAMP)")
+    int saveMemberInfo(@Param("member") MemberInfo member);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM member_info WHERE member_uid = :memberUid")
+    MemberInfo findByIdNative(@Param("memberUid") String memberUid);
 }

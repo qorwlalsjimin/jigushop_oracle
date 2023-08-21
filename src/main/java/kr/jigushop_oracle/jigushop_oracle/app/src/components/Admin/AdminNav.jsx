@@ -13,7 +13,6 @@ export default function AdminNav() {
         Cookies.remove('loggedIn'); // loggedIn 쿠키 제거
         setIsLogin(false); // 로그인 상태 업데이트
         console.log(isLogin);
-
     };
 
     return (

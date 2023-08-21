@@ -20,7 +20,7 @@ public class MemberInfo {
     private String memberUpw;
     private String memberName;
     private int phone;
-    private String gener;
+    private String gender;
     private Date joinTimestamp;
 
 }

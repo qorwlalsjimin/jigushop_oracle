@@ -5,9 +5,26 @@ import { Container } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { cartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { ReactComponent as CartSVG } from "../../svgfiles/Cart.svg";
+import { useState } from "react";
+import Cookies from 'js-cookie';
 
 export default function Nav() {
+
+    const [isLogin, setIsLogin] = useState(Cookies.get('MemberloggedIn') === 'true');
+    console.log(isLogin);
+
+    const handleLogout = () => {
+        const confirmed = window.confirm(`로그아웃하시겠습니까?`);
+        
+        if (confirmed) {
+            Cookies.remove('MemberloggedIn'); // loggedIn 쿠키 제거
+            setIsLogin(false); // 로그인 상태 업데이트
+            console.log(isLogin);
+        }
+    };
+
     const navStyle = {
         outline: "none",
         cursor: "pointer"
@@ -25,14 +42,18 @@ export default function Nav() {
                     </div>
                     <div className="nav_nav col-6 mt-3">
                         {/* <!--로그인되어 있을때--> */}
-                        {/* <a href="#" className=""><span className="p-2" id="join" onclick="logout();">로그아웃</span></a> */}
+                        <div className={`${!isLogin ? "hidden" : ""}`}>
+                            <span className="p-2 logout_text" id="join" onClick={handleLogout}>로그아웃</span>
+                            <NavLink to="/cart"><span className="p-2"> <CartSVG /> </span></NavLink>
+                            <NavLink to="/mypage"><span className="p-2"> <FontAwesomeIcon icon={faUser} /></span></NavLink>
+                        </div>
 
                         {/* <!--로그인해야할때--> */}
-                        <NavLink to="/login" className="sign_in_out"><span className="p-2" id="login">로그인</span></NavLink>
-                        <NavLink to="/join" className=""><span className="p-2" id="join">회원가입</span></NavLink>
-                        <NavLink to="/cart"><span className="p-2">
-                            <CartSVG />
-                            </span></NavLink>
+                        <div className={isLogin ? "hidden" : ""}>
+                            <NavLink to="/login" className="sign_in_out"><span className="p-2" id="login">로그인</span></NavLink>
+                            <NavLink to="/join" className=""><span className="p-2" id="join">회원가입</span></NavLink>
+                            <NavLink to="/cart"><span className="p-2"> <CartSVG /> </span></NavLink>
+                        </div>
                     </div>
                 </div>
             </Container>
@@ -51,7 +72,7 @@ export default function Nav() {
                         <div className="search_type">
                             <form action='search_result.php' method="get">
                                 <input className="search_word ps-3" name="search_word" id="search_word" type="text" placeholder="Search" onkeypress="enterkey();" style={navStyle} />
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className='magnifying_glass_icon'/>
+                                <FontAwesomeIcon icon={faMagnifyingGlass} className='magnifying_glass_icon' />
                             </form>
                         </div>
                         {/* <!--//search_type--> */}
