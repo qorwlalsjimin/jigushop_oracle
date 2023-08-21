@@ -24,8 +24,8 @@ export default function AdminNav() {
                         <Link to="/admin_logout" className={styles.small_text}>로그아웃</Link>
                     </div>
                     <div className={styles.function}>
-                        <Link to="/add" className={styles.yellow_text}>등록</Link>
-                        <Link to="/chart" className={styles.yellow_text}>분석</Link>
+                        <Link to="/admin_form?class=add" className={styles.yellow_text}>등록</Link>
+                        <Link to="/admin_chart" className={styles.yellow_text}>분석</Link>
                     </div>
                 </div>
             </Container>

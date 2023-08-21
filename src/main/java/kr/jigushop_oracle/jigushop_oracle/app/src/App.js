@@ -6,6 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import JoinPage from './pages/JoinPage/JoinPage';
 import Cart from './pages/Cart/Cart';
+import AdminIndex from './pages/Admin/AdminIndex';
+import AdminLogin from './pages/Admin/AdminLogin';
+import AdminJoin from './pages/Admin/AdminJoin';
+import AdminItem from './pages/Admin/AdminItem';
+import AdminChart from './pages/Admin/AdminChart';
 
 function App() {
   return (
@@ -13,6 +18,13 @@ function App() {
       <Routes>
         {/* 메인 */}
         <Route path="/" element={<Home />} />
+
+        {/* 관리자 */}
+        <Route path="/admin" element={<AdminIndex/>} />
+        <Route path="/admin_login" element={<AdminLogin/>} />
+        <Route path="/admin_join" element={<AdminJoin/>} />
+        <Route path="/admin_form" element={<AdminItem/>} />
+        <Route path="/admin_chart" element={<AdminChart/>} />
 
         {/* 상품 목록 */}
         <Route path="/item_list" element={<ItemList />} />
