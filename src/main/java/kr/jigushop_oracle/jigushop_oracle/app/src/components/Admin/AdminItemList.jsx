@@ -10,13 +10,19 @@ export default function AdminItemList() {
     const navigate = useNavigate();
 
     const handleLinkClick = async (itemId) => {
+        const confirmed = window.confirm(`${itemId}번 상품을 삭제하시겠습니까?`);
+        
+        if (!confirmed) {
+            return;
+        }
+    
         try {
             console.log("클릭!")
-
+    
             const response = await axios.delete(`/api/admin/delete_item/${itemId}`);
-
+    
             if (response.status === 200) {
-                console.log("상품 삭제 성공");
+                alert(`${itemId}번 상품 삭제 완료`);
                 // 삭제 후 상태 업데이트
                 setItems(prevItems => prevItems.filter(item => item.itemId !== itemId));
             }
@@ -24,6 +30,7 @@ export default function AdminItemList() {
             console.error(error);
         }
     };
+    
     
     useEffect(() => {
         let fetchUrl = `/api/admin/items`;
@@ -44,7 +51,7 @@ export default function AdminItemList() {
 
     return (
         <>
-            <Container className={`text-center mt-5`}>
+            <Container className={`text-center my-5`}>
                 <Row className={`m-5 text-success`}>
                     <h1>등록된 상품</h1>
                 </Row>
@@ -71,7 +78,7 @@ export default function AdminItemList() {
                                 <td>{item.price}원</td>
                                 <td>{item.categoryId}번</td>
                                 <td>
-                                    <Link to={`/admin_form?class=edit&id=${item.itemId}`}>수정</Link> |
+                                    <Link to={`/admin_form?class=edit&id=${item.itemId}`}>수정</Link> 
                                     <Link onClick={() => handleLinkClick(item.itemId)}> 삭제</Link>
                                 </td>
                             </tr>
@@ -79,7 +86,7 @@ export default function AdminItemList() {
                     </tbody>
                 </table>
 
-                <Link to="/admin_form?class=add" className={`float-end`}>상품 등록하기</Link>
+                <Link to="/admin_form?class=add" className={`float-end mb-5 pb-5`}>상품 등록하기</Link>
             </Container>
         </>
     )
