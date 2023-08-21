@@ -13,7 +13,9 @@ export default function AdminAddForm() {
         itemDesc: "",
         img: "",
         price: "",
-        categoryId: 101
+        categoryId: 101,
+        best: "0",
+        new: "0"
     };
 
     const [item, setItem] = useState(initialItem);
@@ -34,7 +36,7 @@ export default function AdminAddForm() {
             setTimeout(() => {
                 alert(`'${item.itemName}' 상품 등록이 정상적으로 처리되었습니다.`);
                 navigate("/admin");
-              }, 200);
+            }, 200);
         } catch (error) {
             console.error(error);
         }
@@ -82,6 +84,21 @@ export default function AdminAddForm() {
                             <option value="104">음료용품</option>
                             <option value="105">화장품</option>
                         </select>
+                    </Col>
+
+                    <Col md={12}>
+                        <span>BEST 상품</span>
+                        <input
+                            type="checkbox"
+                            // checked={isBest}
+                            onChange={handleChanges}
+                        />
+                        <span>NEW 상품</span>
+                        <input
+                            type="checkbox"
+                            // checked={isNew}
+                            onChange={handleChanges}
+                        />
                     </Col>
 
                     <Col md={12} className="d-flex justify-content-center mt-4">
