@@ -11,10 +11,14 @@ import { ReactComponent as HeartEmptySVG } from "../../svgfiles/HeartEmpty.svg";
 export default function ItemDetailUpper() {
     const { itemId } = useParams();
     const [item, setItem] = useState([]);
+    const [quantity, setQuantity] = useState(1); // 상품 갯수 
+    const [selectedOptions, setSelectedOptions] = useState({}); // 선택한 옵션과 수량
 
     let imgArr = String(item.img).split(",");
     const [presentImg, setPresentImg] = useState(imgArr[0]);
 
+    let optionArr = String(item.itemOption).split(",");
+    
     useEffect(() => {
         // API 요청
         axios.get(`/api/item/${itemId}`)
@@ -27,6 +31,23 @@ export default function ItemDetailUpper() {
             });
 
     }, [itemId]);
+
+    const handleChanges = (event) => {
+        const { name, value } = event.target;
+
+        setSelectedOptions((prevItem) => ({
+            ...prevItem,
+            [value]: 1
+        }));
+
+        console.log(selectedOptions);
+    };
+
+    const handleQuantityChange = (event) => {
+        const newQuantity = parseInt(event.target.value);
+        setQuantity(newQuantity);
+        console.log(quantity)
+    };
 
 
     return (
@@ -63,18 +84,46 @@ export default function ItemDetailUpper() {
                             <span className={styles.left_text}>배송 방법</span> <span className={styles.right_text}>택배</span> <br />
                             <span className={styles.left_text}>배송비</span> <span className={styles.right_text}>3,000원</span> <br />
                         </div>
-                        <div className={`${styles.option_box} p-3 my-3`}>
+
+                        {/* 옵션 선택 */}
+                        {item.itemOption && <div className="mt-4">
+                            <span className={styles.left_text}>옵션 *</span>
+                            <select className="form-select mt-2" required name="option" onChange={handleChanges}>
+                                <option disabled value="" selected>옵션을 선택해주세요</option>
+                                {item.itemOption.split(",").map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>}
+                        
+                        {/* 선택한 옵션 박스 */}
+                        {Object.keys(selectedOptions).length && <div className={`${styles.option_box} p-3 my-3`}>
                             <span className={styles.option_title_text}>수량</span>
                             <hr className={styles.dot} />
                             <Row className="justify-content-end">
-                                <Col>박스</Col>
-                                <Col className={styles.option_price_text}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Col>
+                                <Col>
+                                    <input
+                                        type="number"
+                                        id="quantity"
+                                        name="quantity"
+                                        value={quantity}
+                                        onChange={handleQuantityChange}
+                                        min="1"
+                                        max="100"
+                                    />
+                                </Col>
+                                <Col className={styles.option_price_text}>
+                                    {String(item.price * quantity).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                                </Col>
                             </Row>
-                        </div>
+                        </div>}
+                        
 
                         <Row className="justify-content-end mt-4">
-                            <Col className={styles.total_title_text}>총 상품금액({1}개)</Col>
-                            <Col className={styles.total_price_text}>{String(item.price * 1).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Col>
+                            <Col className={styles.total_title_text}>총 상품금액({quantity}개)</Col>
+                            <Col className={styles.total_price_text}>{String(item.price * quantity).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Col>
                         </Row>
 
                         <Row className="text-center mt-5">
@@ -89,7 +138,7 @@ export default function ItemDetailUpper() {
 
             <Container>
                 <Row className="text-center mb-5">
-                    <hr className="mb-5"/>
+                    <hr className="mb-5" />
                     <Col md={12} className="text-center mt-5">
                         <img src={imgArr[0]} alt="" />
                     </Col>
