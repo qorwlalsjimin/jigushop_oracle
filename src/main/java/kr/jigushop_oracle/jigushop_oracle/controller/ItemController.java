@@ -32,12 +32,36 @@ public class ItemController {
     }
     * */
 
+    /* 상품 목록 */
+    // 카테고리별
     @GetMapping("/items/{categoryId}")
     public Collection<Item> selectItemAll(@PathVariable Long categoryId){
         System.out.println("카테고리별 상품 조회 get");
         return itemService.selectItemAll(categoryId);
     }
 
+    // best, sale 상품 갯수 제한
+    @GetMapping("/items/best")
+    public Collection<Item> selectBestItemAll(){
+        System.out.println("best 상품 조회 get");
+        return itemService.selectBestItem();
+    }
+
+    @GetMapping("/items/sale")
+    public Collection<Item> selectNewItemAll(){
+        System.out.println("sale 상품 조회 get");
+        return itemService.selectNewItem();
+    }
+
+    // 검색
+    @GetMapping("/search")
+    public Collection<Item> selectSearch(@RequestParam String keyword){
+        System.out.println(keyword+" 상품 검색 get");
+        return itemService.search(keyword);
+    }
+
+
+    /* 상품 하나 */
     @GetMapping("/{itemId}")
     public Collection<Item> selectItemOne(@PathVariable Long itemId){
         System.out.println("상품 하나 조회 get");

@@ -11,17 +11,19 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "item", indexes = {
+        @Index(name = "idx_item_name", columnList = "itemName")
+})
 public class Item {
     @Id
     @SequenceGenerator(name = "item_seq", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-//    @JoinColumn(
-//            table = "category",
-//            name = "categoryId",
-//            referencedColumnName = "categoryId")
-    @Column(nullable = false)
+    @JoinColumn(
+            table = "category",
+            name = "categoryId",
+            referencedColumnName = "categoryId")
     private Long categoryId;
 
     @Column(nullable = false)
@@ -40,10 +42,10 @@ public class Item {
     @ColumnDefault("0")
     private char best;
 
-
     @Column(nullable = false)
     @ColumnDefault("0")
     private char sale;
+
 
     @Builder
     public Item(Long itemId, Long categoryId, String itemName, String brand, String itemOption, String itemDesc, String img, Long price, char best, char sale) {

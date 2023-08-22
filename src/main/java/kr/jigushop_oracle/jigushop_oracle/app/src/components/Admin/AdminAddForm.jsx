@@ -15,17 +15,25 @@ export default function AdminAddForm() {
         price: "",
         categoryId: 101,
         best: "0",
-        new: "0"
+        sale: "0"
     };
 
     const [item, setItem] = useState(initialItem);
 
     const handleChanges = (event) => {
-        const { name, value } = event.target;
-        setItem((prevItem) => ({
-            ...prevItem,
-            [name]: value
-        }));
+        const { name, value, type, checked } = event.target;
+
+        if (type === "checkbox") {
+            setItem((prevItem) => ({
+                ...prevItem,
+                [name]: checked ? "1" : "0"  
+            }));
+        } else {
+            setItem((prevItem) => ({
+                ...prevItem,
+                [name]: value
+            }));
+        }
     };
 
     const handleSubmit = async (event) => {
@@ -87,18 +95,23 @@ export default function AdminAddForm() {
                     </Col>
 
                     <Col md={12}>
-                        <span>BEST 상품</span>
                         <input
                             type="checkbox"
-                            // checked={isBest}
+                            name="best"
+                            checked={item.best === "1"}
                             onChange={handleChanges}
                         />
-                        <span>NEW 상품</span>
+                        <span> BEST 상품</span>
+                        <br />
+
                         <input
                             type="checkbox"
-                            // checked={isNew}
+                            name="sale"
+                            checked={item.sale === "1"}
                             onChange={handleChanges}
                         />
+                        <span> SALE 상품</span>
+                        <br />
                     </Col>
 
                     <Col md={12} className="d-flex justify-content-center mt-4">

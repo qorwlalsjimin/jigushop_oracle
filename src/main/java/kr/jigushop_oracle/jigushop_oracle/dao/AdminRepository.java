@@ -17,11 +17,11 @@ public interface AdminRepository extends JpaRepository<Item, Long> {
     Item findOneNative(@Param("id") Long id);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE item SET category_id = :#{#item.categoryId}, item_name = :#{#item.itemName}, brand = :#{#item.brand}, item_option = :#{#item.itemOption}, item_desc = :#{#item.itemDesc}, img = :#{#item.img}, price = :#{#item.price} WHERE item_id = :#{#item.itemId}")
+    @Query(nativeQuery = true, value = "UPDATE item SET category_id = :#{#item.categoryId}, item_name = :#{#item.itemName}, brand = :#{#item.brand}, item_option = :#{#item.itemOption}, item_desc = :#{#item.itemDesc}, img = :#{#item.img}, price = :#{#item.price}, best = :#{#item.best}, sale = :#{#item.sale} WHERE item_id = :#{#item.itemId}")
     int updateItem(@Param("item") Item item);
 
     @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO item VALUES (item_seq.NEXTVAL, :#{#item.categoryId}, :#{#item.itemName}, :#{#item.brand}, :#{#item.itemOption}, :#{#item.itemDesc}, :#{#item.img}, :#{#item.price})")
+    @Query(nativeQuery = true, value = "INSERT INTO item VALUES (item_seq.NEXTVAL, :#{#item.categoryId}, :#{#item.itemName}, :#{#item.brand}, :#{#item.itemOption}, :#{#item.itemDesc}, :#{#item.img}, :#{#item.price}, :#{#item.best}, :#{#item.sale})")
     int addItem(@Param("item") Item item);
 
     @Modifying

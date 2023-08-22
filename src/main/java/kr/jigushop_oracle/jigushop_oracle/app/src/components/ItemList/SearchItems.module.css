@@ -1,0 +1,61 @@
+.keyword_text {
+    color: #646464;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38.4px;
+}
+
+.category_text {
+    font-size: 15px;
+    color: #c1c1c1;
+}
+
+
+.title_text {
+    font-size: 17px;
+    color: #646464;
+    font-weight: bold;
+}
+
+.desc_text {
+    font-size: 15px;
+    color: #646464;
+}
+
+.price_text {
+    font-size: 16px;
+}
+
+.best_text {
+    color: #FE5356;
+    border: 0.5px solid #c8c8c8;
+    font-size: 13px;
+    padding: 2px 8px;
+}
+
+.sale_text {
+    background-color: #FE5356;
+    border: 0.5px solid #FE5356;
+    color: white;
+    font-size: 13px;
+    padding: 2px 8px;
+}
+
+.cnt_text {
+    color: #757575;
+    font-size: 13px;
+}
+
+.hr {
+    color: #aeaeae;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.result_text{
+    font-size: 15px;
+    color: #aeaeae;
+}

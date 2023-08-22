@@ -9,15 +9,24 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { ReactComponent as CartSVG } from "../../svgfiles/Cart.svg";
 import { useState } from "react";
 import Cookies from 'js-cookie';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const navStyle = {
+    outline: "none",
+    cursor: "pointer"
+}
 
 export default function Nav() {
+    const navigate = useNavigate();
 
     const [isLogin, setIsLogin] = useState(Cookies.get('MemberloggedIn') === 'true');
-    console.log(isLogin);
+    // console.log(isLogin);
 
+    // 로그아웃 버튼 클릭
     const handleLogout = () => {
         const confirmed = window.confirm(`로그아웃하시겠습니까?`);
-        
+
         if (confirmed) {
             Cookies.remove('MemberloggedIn'); // loggedIn 쿠키 제거
             setIsLogin(false); // 로그인 상태 업데이트
@@ -25,10 +34,22 @@ export default function Nav() {
         }
     };
 
-    const navStyle = {
-        outline: "none",
-        cursor: "pointer"
-    }
+    // 검색어 상태 관리
+    const [searchKeyword, setSearchKeyword] = useState('');
+
+    // 검색어 입력 변화 처리
+    const handleSearchChange = (event) => {
+        setSearchKeyword(event.target.value);
+    };
+
+    // 검색어 제출 처리
+    const handleSearchSubmit = async (event) => {
+        event.preventDefault();
+        console.log("검색어:", searchKeyword);
+        setTimeout(() => {
+            navigate(`/search/${searchKeyword}`);
+        }, 200);
+    };
 
     return (
         <header>
@@ -70,8 +91,8 @@ export default function Nav() {
                     </div>
                     <div className="search_area col-6">
                         <div className="search_type">
-                            <form action='search_result.php' method="get">
-                                <input className="search_word ps-3" name="search_word" id="search_word" type="text" placeholder="Search" onkeypress="enterkey();" style={navStyle} />
+                            <form onSubmit={handleSearchSubmit} method="get">
+                                <input className="search_word ps-3" name="keyword" type="text" placeholder="Search" onkeypress="enterkey();" style={navStyle} onChange={handleSearchChange} />
                                 <FontAwesomeIcon icon={faMagnifyingGlass} className='magnifying_glass_icon' />
                             </form>
                         </div>

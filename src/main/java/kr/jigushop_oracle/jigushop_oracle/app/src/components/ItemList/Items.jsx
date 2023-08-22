@@ -23,15 +23,15 @@ export default function Items() {
         // API 요청
         axios.get(categoryApiEndpoint)
             .then(response => {
-                setItems(response.data); // 받아온 데이터로 bestItems 업데이트
-                console.log(response.data);
+                setItems(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-
-    
     }, [selectedCategory]);
+
+
+
 
     //이미지 호버 이벤트
     const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -51,11 +51,11 @@ export default function Items() {
                 <Table className='table table-bordered text-center mb-5'>
                     <tbody>
                         <tr>
-                            <td className={`${styles.td}`} onClick={() => handleCategoryClick(101)}>욕실</td>
-                            <td className={`${styles.td}`} onClick={() => handleCategoryClick(102)}>주방</td>
-                            <td className={`${styles.td}`} onClick={() => handleCategoryClick(103)}>생활</td>
-                            <td className={`${styles.td}`} onClick={() => handleCategoryClick(104)}>음료용품</td>
-                            <td className={`${styles.td}`} onClick={() => handleCategoryClick(105)}>화장품</td>
+                            <td className={`${styles.td} ${selectedCategory === 101 ? styles.active : ''}`} onClick={() => handleCategoryClick(101)}>욕실</td>
+                            <td className={`${styles.td} ${selectedCategory === 102 ? styles.active : ''}`} onClick={() => handleCategoryClick(102)}>주방</td>
+                            <td className={`${styles.td} ${selectedCategory === 103 ? styles.active : ''}`} onClick={() => handleCategoryClick(103)}>생활</td>
+                            <td className={`${styles.td} ${selectedCategory === 104 ? styles.active : ''}`} onClick={() => handleCategoryClick(104)}>음료용품</td>
+                            <td className={`${styles.td} ${selectedCategory === 105 ? styles.active : ''}`} onClick={() => handleCategoryClick(105)}>화장품</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -84,8 +84,8 @@ export default function Items() {
                                             <span className={`${styles.title_text}`}>{item.itemName}</span><br />
                                             <span className={styles.price_text}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span><br />
                                             <div className='mt-1'>
-                                                {item.sale=="1" && <span className={`${styles.sale_text} me-1`}>SALE</span>}
-                                                {item.best=="1" && <span className={`${styles.best_text}`}>BEST</span>}
+                                                {item.sale == "1" && <span className={`${styles.sale_text} me-1`}>SALE</span>}
+                                                {item.best == "1" && <span className={`${styles.best_text}`}>BEST</span>}
                                             </div>
                                         </Link>
                                         <div className='mt-2 d-flex'>

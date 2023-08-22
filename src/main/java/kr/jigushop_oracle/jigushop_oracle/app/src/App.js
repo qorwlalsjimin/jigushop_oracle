@@ -12,6 +12,7 @@ import AdminJoin from './pages/Admin/AdminJoin';
 import AdminItem from './pages/Admin/AdminItem';
 import AdminChart from './pages/Admin/AdminChart';
 import ItemDetail from './pages/ItemDetail/ItemDetail';
+import SearchList from './pages/ItemList/SearchList';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
 
         {/* 상품 상세 */}
         <Route path="/item/:itemId" element={<ItemDetail />} />
+
+        {/* 상품 검색 */}
+        <Route path="/search/:keyword" element={<SearchList />} />
 
         {/* 로그인, 회원가입 */}
         <Route path="/login" element={<LoginPage />} />

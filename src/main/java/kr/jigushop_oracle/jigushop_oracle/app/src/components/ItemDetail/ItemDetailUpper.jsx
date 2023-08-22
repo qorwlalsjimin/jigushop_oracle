@@ -40,7 +40,7 @@ export default function ItemDetailUpper() {
                         <div className={`d-flex py-3`}>
                             <img src={imgArr[0]} className={` ${styles.pointer} w-25 me-1`} />
                             <img src={imgArr[1]} className={` ${styles.pointer} w-25 me-1`} />
-                            <img src={imgArr[2]} className={` ${styles.pointer} w-25`} />
+                            {imgArr[2] && <img src={imgArr[2]} className={` ${styles.pointer} w-25`} />}
                         </div>
                     </Col>
                     <Col md={6} className="p-5">

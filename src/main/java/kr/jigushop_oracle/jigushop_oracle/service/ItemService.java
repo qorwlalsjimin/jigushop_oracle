@@ -24,4 +24,16 @@ public class ItemService {
     public Collection<Item> selectItemOne(Long itemId) {
         return itemRepository.findByIdNative(itemId);
     }
+
+    public Collection<Item> selectBestItem() {
+        return itemRepository.findBest();
+    }
+
+    public Collection<Item> selectNewItem() {
+        return itemRepository.findNew();
+    }
+
+    public Collection<Item> search(String keyword) {
+        return itemRepository.findByKeyword(keyword);
+    }
 }

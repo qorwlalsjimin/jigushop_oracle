@@ -1,62 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import styles from './MainDisplayBest.module.css';
 import { Col, Container, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';  
 
 export default function MainDisplayBest() {
 
-  const bestItems = [
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    {
-      id: 1,
-      images: ['https://cdn.imweb.me/thumbnail/20220816/f258d50637def.jpg', 'https://cdn.imweb.me/thumbnail/20220816/daf2f6bd8f9db.jpg'],
-      title: '[지구샵] 마일드고체치약',
-      price: '5360원',
-      sale: true,
-      best: true
-    },
-    
-    // 다른 아이템들도 추가
-  ];
+  const [bestItems, setBestItems] = useState([]); 
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -67,6 +17,20 @@ export default function MainDisplayBest() {
   const handleMouseLeave = () => {
     setHoveredIndex(null);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get('/api/item/items/best'); 
+        setBestItems(response.data); 
+        console.log(bestItems);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -83,25 +47,28 @@ export default function MainDisplayBest() {
           </Col>
           <Col md={6}>
             <Row>
-              {bestItems.map((item, index) => (
-                <Col md={4} className='mb-5' key={item.id}>
-                  <Link to="/" className={`text-decoration-none`}>
+              {bestItems.map((item, index) => {
+                let imgArr = item.img.split(',');
+                return(
+                  <Col md={4} className='mb-5' key={item.itemId}>
+                  <Link to={`/item/${item.itemId}`} className={`text-decoration-none`}>
                     <img
-                      src={hoveredIndex === index ? item.images[1] : item.images[0]}
+                      src={hoveredIndex === index ? imgArr[1] : imgArr[0]}
                       alt=""
                       className={`w-100 mb-3`}
                       onMouseEnter={() => handleMouseEnter(index)}
                       onMouseLeave={handleMouseLeave}
                     />
-                    <span className={`${styles.title_text}`}>{item.title}</span><br />
-                    <span className={styles.price_text}>{item.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span><br />
+                    <span className={`${styles.title_text}`}>{item.itemName}</span><br />
+                    <span className={styles.price_text}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span><br />
                     <div className='mt-1'>
                       {item.sale && <span className={`${styles.sale_text} me-1`}>SALE</span>}
                       {item.best && <span className={`${styles.best_text}`}>BEST</span>}
                     </div>
                   </Link>
                 </Col>
-              ))}
+                )
+              })}
             </Row>
           </Col>
         </Row>

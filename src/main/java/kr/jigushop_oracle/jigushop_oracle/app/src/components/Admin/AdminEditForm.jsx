@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function AdminEditForm({ idProps }) {
 
-    
+
     const navigate = useNavigate();
 
     const [item, setItem] = useState({
@@ -16,7 +16,9 @@ export default function AdminEditForm({ idProps }) {
         itemDesc: "",
         img: "",
         price: "",
-        categoryId: ""
+        categoryId: "",
+        best: "0",
+        sale: "0"
     });
 
     // 원래 상품 데이터 불러오기
@@ -29,6 +31,7 @@ export default function AdminEditForm({ idProps }) {
                 });
                 const { data } = response;
                 setItem(data);
+                console.log(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -39,38 +42,46 @@ export default function AdminEditForm({ idProps }) {
 
     // input 받기
     const handleChanges = (event) => {
-        const { name, value } = event.target;
-        setItem((prevItem) => ({
-            ...prevItem,
-            [name]: value
-        }));
+        const { name, value, type, checked } = event.target;
+
+        if (type === "checkbox") {
+            setItem((prevItem) => ({
+                ...prevItem,
+                [name]: checked ? "1" : "0"
+            }));
+        } else {
+            setItem((prevItem) => ({
+                ...prevItem,
+                [name]: value
+            }));
+        }
     };
 
     // submit
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
         try {
             //응답 성공
 
             console.log(item);
             const response = await axios.post(`/api/admin/edit_item`,
-              item,
-              {}
+                item,
+                {}
             );
-            
+
             // 세션 설정
             // setCookie("accessToken", `${accessToken}`);
-      
+
             setTimeout(() => {
-              alert(`'${item.itemName}' 상품 수정이 정상적으로 처리되었습니다.`);
-              navigate("/admin");
+                alert(`'${item.itemName}' 상품 수정이 정상적으로 처리되었습니다.`);
+                navigate("/admin");
             }, 200);
-          } catch (error) {
+        } catch (error) {
             //응답 실패
             console.error(error);
-          }
-      
+        }
+
     }
 
 
@@ -93,32 +104,32 @@ export default function AdminEditForm({ idProps }) {
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">브랜드명</label>
                             <input className="form-control mb-1" defaultValue={item.brand} name="brand"
-                                type="text" placeholder="브랜드명을 입력하세요"  onChange={handleChanges} />
+                                type="text" placeholder="브랜드명을 입력하세요" onChange={handleChanges} />
                         </Col>
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">옵션 추가</label>
                             <input className="form-control" type="text" defaultValue={item.itemOption} name="itemOption"
-                                placeholder="쉼표로 구분해주세요 (ex. 분홍,하양)" onChange={handleChanges}  />
+                                placeholder="쉼표로 구분해주세요 (ex. 분홍,하양)" onChange={handleChanges} />
                         </Col>
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">상품 설명</label>
                             <textarea className="form-control" name="itemDesc" rows="3" defaultValue={item.itemDesc}
-                                placeholder="상품 설명을 입력해주세요"  onChange={handleChanges} ></textarea>
+                                placeholder="상품 설명을 입력해주세요" onChange={handleChanges} ></textarea>
                         </Col>
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">이미지</label>
-                            <textarea className="form-control" name="img" rows="3" defaultValue={item.img} 
-                                placeholder="이미지 주소를 쉼표로 구분해주세요"  onChange={handleChanges} ></textarea>
+                            <textarea className="form-control" name="img" rows="3" defaultValue={item.img}
+                                placeholder="이미지 주소를 쉼표로 구분해주세요" onChange={handleChanges} ></textarea>
                         </Col>
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">가격</label>
                             <input className="form-control" type="text" defaultValue={item.price} name="price"
-                                placeholder="가격을 입력해주세요" onChange={handleChanges}  />
+                                placeholder="가격을 입력해주세요" onChange={handleChanges} />
                         </Col>
                         <Col md={12} className="mt-2 mb-4">
                             <label className="float-start">카테고리</label>
                             <select className="form-select" required name="categoryId"
-                                    value={item.categoryId} onChange={handleChanges} >
+                                value={item.categoryId} onChange={handleChanges} >
                                 <option disabled>카테고리를 선택해주세요</option>
                                 <option value="101">욕실</option>
                                 <option value="102">주방</option>
@@ -128,6 +139,25 @@ export default function AdminEditForm({ idProps }) {
                             </select>
                         </Col>
 
+
+                        <Col md={12}>
+                            <input
+                                type="checkbox"
+                                name="best"
+                                checked={item.best === "1"}
+                                onChange={handleChanges}
+                            />
+                            <span> BEST 상품</span>
+                            <br />
+
+                            <input
+                                type="checkbox"
+                                name="sale"
+                                checked={item.sale === "1"}
+                                onChange={handleChanges}
+                            />
+                            <span> SALE 상품</span>
+                        </Col>
 
                         <Col md={12} className="d-flex justify-content-center mt-4">
                             <button className="btn btn-success w-100" type="submit">상품 수정</button>
