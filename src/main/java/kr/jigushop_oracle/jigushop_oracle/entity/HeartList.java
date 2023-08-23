@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class HeartList {
     @Id
-    @SequenceGenerator(name = "heart_seq", sequenceName = "heart_seq", allocationSize = 1)
+    @SequenceGenerator(name = "heart_list_seq", sequenceName = "heart_list_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long heartId;
 
