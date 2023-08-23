@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 export default function ItemDetailUpper() {
     const { itemId } = useParams();
     const [item, setItem] = useState([]);
-    const [quantity, setQuantity] = useState(1); // 상품 갯수 
+    const [quantity, setQuantity] = useState(0); // 상품 갯수 
     const [selectedOptions, setSelectedOptions] = useState({}); // 선택한 옵션과 수량
     const [heartCnt, setHeartCnt] = useState(0); // 선택한 옵션과 수량
     const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
@@ -69,7 +69,7 @@ export default function ItemDetailUpper() {
         };
 
         if (isLogin) {
-            if (item.heart==="1") { // 하트 취소할 때
+            if (item.heart === "1") { // 하트 취소할 때
                 try {
                     const response = await axios.delete(`/api/heart/delete`, { data: heartForm });
                     console.log(response.data, "번 즐겨찾기 취소", item.heart);
@@ -129,39 +129,43 @@ export default function ItemDetailUpper() {
                         </div>
 
                         {/* 옵션 선택 */}
-                        {item.itemOption && <div className="mt-4">
-                            <span className={styles.left_text}>옵션 *</span>
-                            <select className="form-select mt-2" required name="option" onChange={handleChanges}>
-                                <option disabled value="" selected>옵션을 선택해주세요</option>
-                                {item.itemOption.split(",").map((option, index) => (
-                                    <option key={index} value={option}>
-                                        {option}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>}
+                        {item.itemOption && (
+                            <div className="mt-4">
+                                <span className={styles.left_text}>옵션 *</span>
+                                <select className="form-select mt-2" required name="option" onChange={handleChanges}>
+                                    <option disabled value="" selected>옵션을 선택해주세요</option>
+                                    {item.itemOption.split(",").map((option, index) => (
+                                        <option key={index} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
 
                         {/* 선택한 옵션 박스 */}
-                        {Object.keys(selectedOptions).length && <div className={`${styles.option_box} p-3 my-3`}>
-                            <span className={styles.option_title_text}>수량</span>
-                            <hr className={styles.dot} />
-                            <Row className="justify-content-end">
-                                <Col>
-                                    <input
-                                        type="number"
-                                        id="quantity"
-                                        name="quantity"
-                                        value={quantity}
-                                        onChange={handleQuantityChange}
-                                        min="1"
-                                        max="100"
-                                    />
-                                </Col>
-                                <Col className={styles.option_price_text}>
-                                    {String(item.price * quantity).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-                                </Col>
-                            </Row>
-                        </div>}
+                        {Object.keys(selectedOptions).length > 0 && (
+                            <div className={`${styles.option_box} p-3 my-3`}>
+                                <span className={styles.option_title_text}>수량</span>
+                                <hr className={styles.dot} />
+                                <Row className="justify-content-end">
+                                    <Col>
+                                        <input
+                                            type="number"
+                                            id="quantity"
+                                            name="quantity"
+                                            value={quantity}
+                                            onChange={handleQuantityChange}
+                                            min="1"
+                                            max="100"
+                                        />
+                                    </Col>
+                                    <Col className={styles.option_price_text}>
+                                        {String(item.price * quantity).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                                    </Col>
+                                </Row>
+                            </div>
+                        )}
 
 
                         <Row className="justify-content-end mt-4">
@@ -172,7 +176,7 @@ export default function ItemDetailUpper() {
                         <Row className="text-center mt-5">
                             <Col className={`py-3 me-1 ${styles.green_button}`}>구매하기</Col>
                             <Col className={`py-3 me-1 ${styles.button}`}>장바구니</Col>
-                            <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart==="1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{heartCnt}</strong></Col>
+                            <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart === "1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{heartCnt}</strong></Col>
                         </Row>
 
                     </Col>

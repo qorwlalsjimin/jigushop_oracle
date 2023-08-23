@@ -13,6 +13,7 @@ import AdminItem from './pages/Admin/AdminItem';
 import AdminChart from './pages/Admin/AdminChart';
 import ItemDetail from './pages/ItemDetail/ItemDetail';
 import SearchList from './pages/ItemList/SearchList';
+import MyPage from './pages/MyPage/MyPage';
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
 
         {/* 마이페이지 */}
-        <Route path="/mypage" element={<Cart />} />
+        <Route path="/mypage" element={<MyPage />} />
 
       </Routes>
     </BrowserRouter>
