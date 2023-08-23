@@ -1,0 +1,32 @@
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome_text{
+    color: #212121;
+    font-size: 24px;
+}
+
+.round{
+    border-radius: 70%;
+}
+
+.order_title{
+    font-size: 22px;
+}
+
+.order_number_title{
+    color: #333333;
+    font-size: 17px;
+}
+
+.order_number{
+    font-size: 17px;
+}
+
+.order_date{
+    color: #8f8f8f;
+    font-size: 17px;
+}
