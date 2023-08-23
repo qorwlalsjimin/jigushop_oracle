@@ -3,7 +3,9 @@ package kr.jigushop_oracle.jigushop_oracle.service;
 import kr.jigushop_oracle.jigushop_oracle.dao.AdminInfoRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.AdminRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.CategoryRepository;
+import kr.jigushop_oracle.jigushop_oracle.dao.HeartItemRepository;
 import kr.jigushop_oracle.jigushop_oracle.dto.AdminLoginForm;
+import kr.jigushop_oracle.jigushop_oracle.dto.HeartChartForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.AdminInfo;
 import kr.jigushop_oracle.jigushop_oracle.entity.Category;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
@@ -11,15 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class AdminService {
 
     @Autowired AdminRepository adminRepository;
-    @Autowired CategoryRepository categoryRepository;
     @Autowired AdminInfoRepository adminInfoRepository;
+    @Autowired HeartItemRepository heartItemRepository;
 
     public Collection<Item> adminListAll() {
         return adminRepository.findAllNative();
@@ -333,5 +337,19 @@ public class AdminService {
     public boolean join(AdminInfo adminInfo) {
         int isSave = adminInfoRepository.saveAdminInfo(adminInfo);
         return isSave>0 ? true : false;
+    }
+
+    public List<HeartChartForm> heartChart() {
+        List<Object[]> result = heartItemRepository.findCountEntity();
+        List<HeartChartForm> chartFormData = new ArrayList<>();
+
+        for (Object[] row : result) {
+            HeartChartForm dto = new HeartChartForm();
+            dto.setCategoryId(Long.parseLong(row[0].toString()));
+            dto.setCount(Long.parseLong(row[1].toString()));
+            chartFormData.add(dto);
+        }
+
+        return chartFormData;
     }
 }

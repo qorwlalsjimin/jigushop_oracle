@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import Cookies from 'js-cookie';
 import AdminNotice from "./AdminNotice";
-
-const data = [
-    { name: "욕실", value: 10 },
-    { name: "주방", value: 25 },
-    { name: "생활", value: 15 },
-    { name: "음료용품", value: 30 },
-    { name: "화장품", value: 30 }
-];
+import axios from 'axios';
 
 export default function AdminHeartChart() {
 
-    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));    
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        if (isLogin) {
+            axios.get("/api/admin/chart") // Replace with your actual API endpoint
+                .then(response => {
+                    setData(response.data); // Update the state with fetched data
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        }
+    }, [isLogin]);
 
     return ( isLogin ? 
         <Container className={`text-center mt-5`}>
@@ -34,7 +40,7 @@ export default function AdminHeartChart() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="value" fill="#ffae00" />
+                    <Bar dataKey="count" fill="#ffae00" />
                 </BarChart>
             </ResponsiveContainer>
         </Container>

@@ -1,6 +1,7 @@
 package kr.jigushop_oracle.jigushop_oracle.controller;
 
 import kr.jigushop_oracle.jigushop_oracle.dto.AdminLoginForm;
+import kr.jigushop_oracle.jigushop_oracle.dto.HeartChartForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.AdminInfo;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import kr.jigushop_oracle.jigushop_oracle.service.AdminService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -52,12 +54,10 @@ public class AdminController {
     }
 
 
-
     // 상품 목록 조회
     @GetMapping("/items")
     public Collection<Item> selectAllItems(){
         System.out.println("관리자: 상품 조회 get");
-//        adminService.initialize();
         System.out.println(adminService.adminListAll().toArray().length);
         return adminService.adminListAll();
     }
@@ -96,22 +96,11 @@ public class AdminController {
     }
 
 
-
-    /*
-    *     @GetMapping("/category/{countryId}")
-    public Collection<CategoryList> selectCategory(@PathVariable Long countryId){
-        System.out.println("카테고리 목록 get");
-        return adminService.selectCategory(countryId);
+    // 즐겨찾기 차트
+    @GetMapping("/chart")
+    public List<HeartChartForm> heartChart(){
+        System.out.println("관리자: 즐겨찾기 차트 조회 get");
+        return adminService.heartChart();
     }
-
-    //하나의 상품 상세 정보
-    @GetMapping("/{itemId}")
-    public ResponseEntity<?> selectById(@PathVariable Long itemId){
-        System.out.println(itemId);
-        Optional<ItemForm> itemInfo = Optional.ofNullable(adminService.selectItemById(itemId));
-        return itemInfo.map(response -> ResponseEntity.ok().body(response))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-    * */
 
 }
