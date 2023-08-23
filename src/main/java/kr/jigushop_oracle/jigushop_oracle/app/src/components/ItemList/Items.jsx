@@ -43,8 +43,6 @@ export default function Items() {
                 response.data.map((heart, index) => {
                     setHeartStatus(prevState => ({ ...prevState, [heart.itemId]: true }));
                 })
-                console.log("response", response.data)
-                console.log("heartStatus", heartStatus)
             })
             .catch(error => {
                 console.error(error);

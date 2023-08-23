@@ -98,6 +98,9 @@
     cursor: pointer;
     background-color: #07913A;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .green_button:hover{

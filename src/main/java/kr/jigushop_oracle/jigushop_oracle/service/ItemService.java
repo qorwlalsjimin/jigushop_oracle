@@ -1,14 +1,13 @@
 package kr.jigushop_oracle.jigushop_oracle.service;
 
-import kr.jigushop_oracle.jigushop_oracle.dao.AdminRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.ItemRepository;
-import kr.jigushop_oracle.jigushop_oracle.entity.Category;
+import kr.jigushop_oracle.jigushop_oracle.dto.ItemForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -17,12 +16,12 @@ public class ItemService {
     ItemRepository itemRepository;
 
 
-    public Collection<Item> selectItemAll(Long categoryId) {
+    public List<Item> selectItemAll(Long categoryId) {
         return itemRepository.findAllNative(categoryId);
     }
 
-    public Collection<Item> selectItemOne(Long itemId) {
-        return itemRepository.findByIdNative(itemId);
+    public ItemForm selectItemOne(Long itemId, String memberUid) {
+        return itemRepository.findByIdItemForm(itemId, memberUid);
     }
 
     public Collection<Item> selectBestItem() {

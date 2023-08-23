@@ -58,8 +58,8 @@ export default function Nav() {
             <Container className='mb-4'>
                 <div className="row justify-content-end pt-lg-3 pt-sm-2 me-xxl-4 me-lg-0">
                     <div className="nav_logo col-6">
-                        <Link to="/"><img className="top_nav_logo_img mt-1 pt-md-1 wd-75"
-                            src="https://cdn.imweb.me/thumbnail/20220504/5fd02ac97337a.png" alt="지구샵"
+                        <Link to="/"><img className="top_nav_logo_img mt-1 pt-md-1 w-50 pe-5"
+                            src="https://i.postimg.cc/SNT5JTyZ/image.png" alt="지구샵"
                             width="158.535211268" /></Link>
                     </div>
                     <div className="nav_nav col-6 mt-3">

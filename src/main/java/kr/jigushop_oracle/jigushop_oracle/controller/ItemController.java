@@ -1,11 +1,14 @@
 package kr.jigushop_oracle.jigushop_oracle.controller;
 
+import kr.jigushop_oracle.jigushop_oracle.dto.ItemForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import kr.jigushop_oracle.jigushop_oracle.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @RestController
@@ -37,6 +40,7 @@ public class ItemController {
     @GetMapping("/items/{categoryId}")
     public Collection<Item> selectItemAll(@PathVariable Long categoryId){
         System.out.println("카테고리별 상품 조회 get");
+        System.out.println(itemService.selectItemAll(categoryId));
         return itemService.selectItemAll(categoryId);
     }
 
@@ -63,9 +67,22 @@ public class ItemController {
 
     /* 상품 하나 */
     @GetMapping("/{itemId}")
-    public Collection<Item> selectItemOne(@PathVariable Long itemId){
+    public ItemForm selectItemOne(@PathVariable Long itemId, HttpServletRequest request){
         System.out.println("상품 하나 조회 get");
-        return itemService.selectItemOne(itemId);
+
+        Cookie[] cookies = request.getCookies();
+        String memberUid = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("MemberloggedIn")) {
+                    memberUid = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        return itemService.selectItemOne(itemId, memberUid);
     }
 
 

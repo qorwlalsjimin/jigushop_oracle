@@ -7,31 +7,42 @@ import axios from "axios";
 import styles from "./ItemDetailUpper.module.css";
 import { ReactComponent as HeartSVG } from "../../svgfiles/Heart.svg";
 import { ReactComponent as HeartEmptySVG } from "../../svgfiles/HeartEmpty.svg";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 export default function ItemDetailUpper() {
     const { itemId } = useParams();
     const [item, setItem] = useState([]);
     const [quantity, setQuantity] = useState(1); // 상품 갯수 
     const [selectedOptions, setSelectedOptions] = useState({}); // 선택한 옵션과 수량
+    const [heartCnt, setHeartCnt] = useState(0); // 선택한 옵션과 수량
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
+    const navigate = useNavigate();
 
     let imgArr = String(item.img).split(",");
     const [presentImg, setPresentImg] = useState(imgArr[0]);
 
     let optionArr = String(item.itemOption).split(",");
-    
+
     useEffect(() => {
         // API 요청
-        axios.get(`/api/item/${itemId}`)
+        axios.get(`/api/item/${itemId}`, {
+            headers: {
+                Cookie: Cookies.get('MemberloggedIn')
+            }
+        })
             .then(response => {
-                setItem(response.data[0]); // 받아온 데이터로 bestItems 업데이트
-                // console.log(response.data[0]);
+                setItem(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
 
+
     }, [itemId]);
 
+    //옵션 선택
     const handleChanges = (event) => {
         const { name, value } = event.target;
 
@@ -43,11 +54,44 @@ export default function ItemDetailUpper() {
         console.log(selectedOptions);
     };
 
+    //옵션 박스
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
         setQuantity(newQuantity);
         console.log(quantity)
     };
+
+    // 즐겨찾기
+    const handleHeart = async (itemId) => {
+        const heartForm = {
+            memberUid: Cookies.get('MemberloggedIn'),
+            itemId: itemId
+        };
+
+        if (isLogin) {
+            if (item.heart==="1") { // 하트 취소할 때
+                try {
+                    const response = await axios.delete(`/api/heart/delete`, { data: heartForm });
+                    console.log(response.data, "번 즐겨찾기 취소", item.heart);
+                    window.location.reload();
+                } catch (error) {
+                    console.error(error);
+                }
+            } else { // 하트 추가할 때
+                try {
+                    const response = await axios.post(`/api/heart/add`, heartForm, {});
+                    console.log(response.data, "번 즐겨찾기 등록", item.heart);
+                    window.location.reload();
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        } else {
+            window.alert('로그인 후 이용해주세요.');
+            navigate('/login');
+        }
+    };
+
 
 
     return (
@@ -91,13 +135,13 @@ export default function ItemDetailUpper() {
                             <select className="form-select mt-2" required name="option" onChange={handleChanges}>
                                 <option disabled value="" selected>옵션을 선택해주세요</option>
                                 {item.itemOption.split(",").map((option, index) => (
-                                        <option key={index} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
+                                    <option key={index} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
                             </select>
                         </div>}
-                        
+
                         {/* 선택한 옵션 박스 */}
                         {Object.keys(selectedOptions).length && <div className={`${styles.option_box} p-3 my-3`}>
                             <span className={styles.option_title_text}>수량</span>
@@ -119,7 +163,7 @@ export default function ItemDetailUpper() {
                                 </Col>
                             </Row>
                         </div>}
-                        
+
 
                         <Row className="justify-content-end mt-4">
                             <Col className={styles.total_title_text}>총 상품금액({quantity}개)</Col>
@@ -129,7 +173,7 @@ export default function ItemDetailUpper() {
                         <Row className="text-center mt-5">
                             <Col className={`py-3 me-1 ${styles.green_button}`}>구매하기</Col>
                             <Col className={`py-3 me-1 ${styles.button}`}>장바구니</Col>
-                            <Col className={`py-3  ${styles.button} `}><HeartEmptySVG /></Col>
+                            <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart==="1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{heartCnt}</strong></Col>
                         </Row>
 
                     </Col>
