@@ -27,7 +27,7 @@ export default function LoginForm() {
             const response = await axios.post(`/api/member/login`, credentials, {});
             setTimeout(() => {
                 window.alert('로그인 성공');
-                navigate("/");
+                navigate(-1);
             }, 200);
 
             Cookies.set('MemberloggedIn', credentials.memberUid);

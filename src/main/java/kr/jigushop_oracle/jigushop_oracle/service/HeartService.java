@@ -30,10 +30,11 @@ public class HeartService {
         // 2. 1에서 구한 번호와 상품 번호로 HeartItem에 insert
         // TODO join
         Long heartId = heartListRepository.findByIdNative(form.getMemberUid());
-        if(heartId == null){
-            heartId = heartListRepository.saveHeartList(form).getHeartId();
+        if(heartId==null){
+            heartListRepository.saveHeartList(form);
+            heartId = heartListRepository.findByIdNative(form.getMemberUid());
         }
-        System.out.println(heartId);
+        System.out.println("확인!!! "+heartId);
 
         heartItemRepository.saveAddHeart(heartId, form.getItemId());
     }

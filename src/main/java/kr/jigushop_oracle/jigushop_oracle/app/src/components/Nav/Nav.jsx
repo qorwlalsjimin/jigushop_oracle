@@ -31,6 +31,7 @@ export default function Nav() {
             Cookies.remove('MemberloggedIn'); // loggedIn 쿠키 제거
             setIsLogin(false); // 로그인 상태 업데이트
             console.log(isLogin);
+            window.location.reload();
         }
     };
 

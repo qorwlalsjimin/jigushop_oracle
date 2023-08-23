@@ -33,8 +33,9 @@ public class HeartController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody HeartForm form){
         System.out.println("즐겨찾기: 즐겨찾기 상품 등록 '"+form.getItemId()+"'");
+        heartService.add(form);
         try{
-            heartService.add(form);
+//            heartService.add(form);
             return ResponseEntity.ok(form.getItemId());
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
