@@ -20,7 +20,7 @@ const navStyle = {
 export default function Nav() {
     const navigate = useNavigate();
 
-    const [isLogin, setIsLogin] = useState(Cookies.get('MemberloggedIn') === 'true');
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
     // console.log(isLogin);
 
     // 로그아웃 버튼 클릭

@@ -15,7 +15,7 @@ const data = [
 
 export default function AdminHeartChart() {
 
-    const [isLogin, setIsLogin] = useState(Cookies.get('loggedIn') === 'true');
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
 
     return ( isLogin ? 
         <Container className={`text-center mt-5`}>

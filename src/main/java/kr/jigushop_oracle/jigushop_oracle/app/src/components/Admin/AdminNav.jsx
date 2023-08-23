@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from 'react-bootstrap';
 import styles from "./AdminNav.module.css";
 import Cookies from 'js-cookie';
 
 export default function AdminNav() {
+    
+    const navigate = useNavigate();
 
-    const [isLogin, setIsLogin] = useState(Cookies.get('loggedIn') === 'true');
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
     console.log(isLogin);
     
     const handleLogout = () => {
         Cookies.remove('loggedIn'); // loggedIn 쿠키 제거
         setIsLogin(false); // 로그인 상태 업데이트
         console.log(isLogin);
+        navigate("/admin");
     };
 
     return (

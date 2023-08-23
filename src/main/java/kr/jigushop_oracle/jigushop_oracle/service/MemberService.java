@@ -35,9 +35,9 @@ public class MemberService {
         int isSave = memberInfoRepository.saveMemberInfo(form);
 
         // 즐겨찾기 추가
-        HeartList heartList = new HeartList();
-        heartList.setMemberUid(form.getMemberUid());
-        heartListRepository.saveHeartList(heartList);
+//        HeartList heartList = new HeartList();
+//        heartList.setMemberUid(form.getMemberUid());
+//        heartListRepository.saveHeartList(heartList);
 
         return isSave>0 ? true : false;
     }

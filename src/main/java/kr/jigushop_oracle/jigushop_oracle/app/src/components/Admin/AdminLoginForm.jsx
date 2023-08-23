@@ -30,7 +30,7 @@ export default function AdminLoginForm() {
                 navigate("/admin");
             }, 200);
 
-            Cookies.set('loggedIn', 'true');
+            Cookies.set('loggedIn', credentials.adminUid);
         } catch (error) {
             window.alert('로그인에 실패했습니다.'); setTimeout(() => {
                 navigate("/admin_login");

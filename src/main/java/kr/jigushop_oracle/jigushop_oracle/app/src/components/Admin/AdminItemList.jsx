@@ -10,7 +10,7 @@ export default function AdminItemList() {
     // 상품 목록
     const [items, setItems] = useState([]);
 
-    const [isLogin, setIsLogin] = useState(Cookies.get('loggedIn') === 'true');
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
 
     const navigate = useNavigate();
 
@@ -55,6 +55,7 @@ export default function AdminItemList() {
     }, []);
 
     return (
+        isLogin ? 
         <Container className={`text-center my-5`}>
                 <Row className={`m-5 text-success`}>
                     <h1>등록된 상품</h1>
@@ -92,5 +93,7 @@ export default function AdminItemList() {
 
                 <Link to="/admin_form?class=add" className={`float-end mb-5 pb-5`}>상품 등록하기</Link>
         </Container>
+        :
+        <AdminNotice/>
     )
 }

@@ -30,7 +30,7 @@ export default function LoginForm() {
                 navigate("/");
             }, 200);
 
-            Cookies.set('MemberloggedIn', 'true');
+            Cookies.set('MemberloggedIn', credentials.memberUid);
         } catch (error) {
             window.alert('로그인에 실패했습니다.'); setTimeout(() => {
                 navigate("/login");
