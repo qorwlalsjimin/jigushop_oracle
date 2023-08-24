@@ -41,4 +41,10 @@ public class MemberService {
 
         return isSave>0 ? true : false;
     }
+
+    @Transactional
+    public boolean drop(String memberUid) {
+        int isDelete = memberInfoRepository.deleteMember(memberUid);
+        return isDelete>0 ? true : false;
+    }
 }

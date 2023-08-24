@@ -62,6 +62,27 @@
     color: #757575;
 }
 
+.drop_button{
+    border-radius: 40px;
+    transition: all 0.3s ;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: bold;
+    padding: 8px 15px;
+    background-color: #07913A;
+    color: white;
+}
+
+.drop_button_left{
+    border-radius: 40px;
+    transition: all 0.3s ;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: bold;
+    padding: 8px 15px;
+    color: #757575;
+}
+
 .order_box{
     border: #ededed solid 1px;
 }
@@ -94,3 +115,7 @@
     background-color: #646464;
     color: white;
 }
+
+.pointer{
+    cursor: pointer;
+  }

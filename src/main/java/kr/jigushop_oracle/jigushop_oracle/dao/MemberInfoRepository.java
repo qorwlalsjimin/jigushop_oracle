@@ -14,4 +14,9 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> 
 
     @Query(nativeQuery = true, value = "SELECT * FROM member_info WHERE member_uid = :memberUid")
     MemberInfo findByIdNative(@Param("memberUid") String memberUid);
+
+
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM member_info WHERE member_uid = :memberUid")
+    int deleteMember(String memberUid);
 }
