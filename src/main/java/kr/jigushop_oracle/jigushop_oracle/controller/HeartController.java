@@ -3,6 +3,7 @@ package kr.jigushop_oracle.jigushop_oracle.controller;
 import kr.jigushop_oracle.jigushop_oracle.dto.HeartForm;
 import kr.jigushop_oracle.jigushop_oracle.dto.MemberLoginForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.HeartItem;
+import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import kr.jigushop_oracle.jigushop_oracle.entity.MemberInfo;
 import kr.jigushop_oracle.jigushop_oracle.service.HeartService;
 import kr.jigushop_oracle.jigushop_oracle.service.MemberService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +27,19 @@ public class HeartController {
 
     //즐겨찾기 조회
     @GetMapping("/items")
-    public Collection<HeartItem> findAll(@RequestParam String memberUid){
+    public Collection<Item> findAll(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        String memberUid = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("MemberloggedIn")) {
+                    memberUid = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
         System.out.println("즐겨찾기: 즐겨찾기 조회 "+memberUid);
         return heartService.findAll(memberUid);
     }

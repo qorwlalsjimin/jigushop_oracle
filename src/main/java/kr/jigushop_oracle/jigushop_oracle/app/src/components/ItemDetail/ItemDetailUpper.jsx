@@ -176,7 +176,7 @@ export default function ItemDetailUpper() {
                         <Row className="text-center mt-5">
                             <Col className={`py-3 me-1 ${styles.green_button}`}>구매하기</Col>
                             <Col className={`py-3 me-1 ${styles.button}`}>장바구니</Col>
-                            <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart === "1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{heartCnt}</strong></Col>
+                            <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart === "1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{item.heartCnt}</strong></Col>
                         </Row>
 
                     </Col>

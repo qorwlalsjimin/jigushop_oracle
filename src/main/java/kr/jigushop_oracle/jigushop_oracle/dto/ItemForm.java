@@ -19,4 +19,5 @@ public class ItemForm {
     private char best;
     private char sale;
     private char heart;
+    private Long heartCnt;
 }

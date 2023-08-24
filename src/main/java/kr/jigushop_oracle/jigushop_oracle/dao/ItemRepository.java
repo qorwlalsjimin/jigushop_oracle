@@ -21,13 +21,22 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllNative(@Param("categoryId") Long categoryId);
 
     @Query(nativeQuery = true, value =  "SELECT item_id, category_id, item_name, brand, item_option, item_desc, img, price, best, sale, " +
-                                        "    CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
-                                        "                          NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
-                                        "         THEN '1' " +
-                                        "    ELSE '0' " +
-                                        "    END heart " +
-                                        "FROM item WHERE (:memberUid IS NULL OR item_id = :itemId)")
+                                        "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
+                                        "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
+                                        "            THEN '1' " +
+                                        "       ELSE '0' " +
+                                        "       END heart, " +
+                                        "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
+                                        "FROM item WHERE item_id = :itemId")
     List<Object[]> findByIdNative(Long itemId, String memberUid);
+
+
+    @Query(nativeQuery = true, value =  "SELECT * FROM item " +
+                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
+                                        "                  WHERE heart_id = " +
+                                        "                    (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid) " +
+                                        ")")
+    Collection<Item> findByMember(@Param("memberUid") String memberUid);
 
     @Query(nativeQuery = true, value =  "SELECT * FROM (" +
                                         "    SELECT * FROM item WHERE best = 1 ORDER BY item_id" +
@@ -66,6 +75,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
         itemForm.setBest((char) result[8]);
         itemForm.setSale((char) result[9]);
         itemForm.setHeart((char) result[10]);
+        itemForm.setHeartCnt(Long.parseLong(String.valueOf(result[11])));
 
         return itemForm;
     }

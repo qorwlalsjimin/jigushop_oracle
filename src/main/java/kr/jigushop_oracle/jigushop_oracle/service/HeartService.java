@@ -2,10 +2,12 @@ package kr.jigushop_oracle.jigushop_oracle.service;
 
 import kr.jigushop_oracle.jigushop_oracle.dao.HeartItemRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.HeartListRepository;
+import kr.jigushop_oracle.jigushop_oracle.dao.ItemRepository;
 import kr.jigushop_oracle.jigushop_oracle.dao.MemberInfoRepository;
 import kr.jigushop_oracle.jigushop_oracle.dto.HeartForm;
 import kr.jigushop_oracle.jigushop_oracle.dto.MemberLoginForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.HeartItem;
+import kr.jigushop_oracle.jigushop_oracle.entity.Item;
 import kr.jigushop_oracle.jigushop_oracle.entity.MemberInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class HeartService {
 
     @Autowired
     HeartListRepository heartListRepository;
+
+    @Autowired
+    ItemRepository itemRepository;
 
     @Transactional
     public void add(HeartForm form) {
@@ -47,8 +52,8 @@ public class HeartService {
         heartItemRepository.deleteByItem(heartId, form.getItemId());
     }
 
-    public Collection<HeartItem> findAll(String memberUid) {
-        return heartItemRepository.findByMember(memberUid);
+    public Collection<Item> findAll(String memberUid) {
+        return itemRepository.findByMember(memberUid);
     }
 
 

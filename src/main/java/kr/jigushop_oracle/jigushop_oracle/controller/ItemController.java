@@ -68,7 +68,6 @@ public class ItemController {
     /* 상품 하나 */
     @GetMapping("/{itemId}")
     public ItemForm selectItemOne(@PathVariable Long itemId, HttpServletRequest request){
-        System.out.println("상품 하나 조회 get");
 
         Cookie[] cookies = request.getCookies();
         String memberUid = null;
@@ -82,6 +81,7 @@ public class ItemController {
             }
         }
 
+        System.out.println("상품 하나 조회 get "+itemId+", "+memberUid);
         return itemService.selectItemOne(itemId, memberUid);
     }
 
