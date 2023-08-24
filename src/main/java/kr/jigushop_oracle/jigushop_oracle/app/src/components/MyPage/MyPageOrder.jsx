@@ -10,7 +10,7 @@ export default function MyPageOrder() {
 
     return (
         <Row className='py-5'>
-            <strong className={`${styles.order_title} mb-1`}>주문 조회</strong>
+            <strong className={`${styles.menu_title} mb-1`}>주문 조회</strong>
             <Row className='justify-content-between'>
                 <Col md={3} >
                     <span className={`${styles.order_number_title}`}>주문번호 </span> <span className={`${styles.order_number} ms-2`}>{202307224224463}</span>
@@ -20,19 +20,20 @@ export default function MyPageOrder() {
                 </Col>
             </Row>
 
-            <Col md={12} className={`mt-3`}>
+            {/* 주문한 상품들 */}
+            <Col md={12} className={`mt-3 p-4 ${styles.order_box}`}>
                 <Row className={`${styles.center}`}>
-                    <Col md={2}><img src="https://cdn.imweb.me/thumbnail/20221029/32d73015877b5.jpg" className='w-50 ' alt="" /></Col>
-                    <Col md={4}>
-                        <p>미니 에코백</p>
-                        <p>화이트</p>
-                        <p>8,900원 / 1개</p>
+                    <Col md={1}><img src="https://cdn.imweb.me/thumbnail/20221029/32d73015877b5.jpg" style={{width: "80px"}} alt="" /></Col>
+                    <Col md={5}>
+                        <span className={`${styles.item_title}`}>{`[${"바잇미"}] ${"에코백"}`}</span><br />
+                        <span className={`${styles.item_option}`}>화이트</span><br />
+                        <span className={`${styles.item_price}`}>8,900원 / 1개</span><br />
                     </Col>
                     <Col md={4}>
-                        취소완료
+                        <span className={styles.order_status}>취소완료</span>
                     </Col>
-                    <Col md={2}>
-                        취소상세
+                    <Col md={2} >
+                        <span className={`float-end ${styles.info_button}`}>상세정보</span>
                     </Col>
                 </Row>
             </Col>
