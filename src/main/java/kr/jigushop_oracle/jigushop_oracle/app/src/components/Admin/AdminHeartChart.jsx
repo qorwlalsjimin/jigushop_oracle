@@ -40,7 +40,8 @@ export default function AdminHeartChart() {
     const COLORS = ["#FF5733", "#FFA600", "#4CAF50", "#3498DB", "#9B59B6"];
 
     // Filter out the "총합" entry from data
-    const filteredData = data.filter(entry => entry.name !== "총합");
+    const filteredData = data.filter(entry => entry.name !== "총합" && entry.value !== 0);
+
 
     return (
         isLogin ?
