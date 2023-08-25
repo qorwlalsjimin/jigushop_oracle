@@ -15,6 +15,7 @@ export default function ItemDetailUpper() {
     const [item, setItem] = useState([]);
     const [quantity, setQuantity] = useState(0); // 상품 갯수 
     const [selectedOptions, setSelectedOptions] = useState({}); // 선택한 옵션과 수량
+    const [cartOptions, setCartOptions] = useState({}); // 선택한 옵션과 수량
     const [heartCnt, setHeartCnt] = useState(0); // 선택한 옵션과 수량
     const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
     const navigate = useNavigate();
@@ -33,14 +34,26 @@ export default function ItemDetailUpper() {
         })
             .then(response => {
                 setItem(response.data);
-                console.log(response.data)
 
-                console.log(item.itemOption);
+                setCartOptions(()=>({
+                    "itemName": response.data.itemName,
+                    "img": response.data.img,
+                    "price": response.data.price
+                }))
+                
                 if (!response.data.itemOption) {
                     setSelectedOptions((prevItem) => ({
                         "수량": 1
                     }));
                     setQuantity(quantity + 1);
+
+                    setCartOptions((pre)=>({
+                        ...pre,
+                        "option": {
+                            ...selectedOptions
+                        }
+                    }))
+                    console.log("useEffect", cartOptions)
                 } else {
                     setSelectedOptions({});
                 }
@@ -48,14 +61,12 @@ export default function ItemDetailUpper() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-        console.log(selectedOptions)
     }, [itemId]);
 
 
     //옵션 선택
     const handleChanges = (event) => {
         const { name, value } = event.target;
-
 
         setSelectedOptions((prevItem) => {
             if (prevItem.hasOwnProperty(value.trim())) {
@@ -68,9 +79,17 @@ export default function ItemDetailUpper() {
                 };
             }
         });
+
+        setCartOptions((pre)=>({
+            ...pre,
+            "option": {
+                ...selectedOptions
+            }
+        }))
+        console.log("옵션선택", selectedOptions, cartOptions)
     };
 
-    //옵션 박스
+    //수량 조절
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
         setSelectedOptions((prevItem) => ({
@@ -78,7 +97,12 @@ export default function ItemDetailUpper() {
             [event.target.name]: newQuantity
         }));
         setQuantity(quantity + 1);
-        console.log(selectedOptions)
+
+        setCartOptions((pre)=>({
+            ...pre,
+            "option": selectedOptions
+        }))
+        console.log("수량 조절", cartOptions)
     };
 
     // 즐겨찾기
@@ -118,9 +142,10 @@ export default function ItemDetailUpper() {
             alert('옵션을 선택해주세요.');
             return;
         }
-        console.log("장바구니 추가", selectedOptions);
+        console.log("장바구니 추가", cartOptions);
+        navigate('/cart')
 
-        localStorage.setItem("cart", JSON.stringify(selectedOptions));
+        localStorage.setItem("cart", JSON.stringify(cartOptions));
     }
 
 

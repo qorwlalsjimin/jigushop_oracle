@@ -13,6 +13,7 @@ import MyPageDrop from './MyPageDrop';
 export default function MyPageNav() {
     const navigate = useNavigate();
     const [menu, setMenu] = useState("order");
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
 
     const handleList = (selectedMenu) => {
         setMenu(selectedMenu);

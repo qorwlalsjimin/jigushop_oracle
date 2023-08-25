@@ -19,7 +19,11 @@ public class MemberInfo {
     @Column(nullable = false)
     private String memberUpw;
     private String memberName;
-    private int phone;
+
+    @Column(length = 11, nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
     private String gender;
     private Date joinTimestamp;
 

@@ -63,12 +63,12 @@ export default function JoinForm() {
                                 <div>
                                     <label className="form-check-label" htmlFor="flexRadioDefault1">
                                         <input className="form-check-input" type="radio" name="gender" value="male" checked={formData.gender === 'male'}  onChange={handleChange}/>
-                                        남자
+                                        &nbsp;남자
                                     </label>
                                     <br />
                                     <label className="form-check-label" htmlFor="flexRadioDefault2">
                                         <input className="form-check-input" type="radio" name="gender" value="female"  onChange={handleChange}/>
-                                        여자
+                                        &nbsp;여자
                                     </label>
                                 </div>
                             </div>

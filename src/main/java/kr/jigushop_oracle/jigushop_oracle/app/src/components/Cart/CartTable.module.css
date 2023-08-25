@@ -8,3 +8,68 @@
     color: white;
 }
 
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #c3c3c369;
+}
+
+.tr{
+    border: 1px solid #c3c3c369;
+}
+
+.th{
+    color: #64646499;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.td_check{
+    width: 3%;
+}
+
+.td_info{
+    width: 55%
+}
+
+.td_cnt{
+    width: 15%;
+}
+
+.td_price{
+    width: 15%;
+}
+
+.td_delivery{
+    width: 15%;
+}
+
+.text{
+    color: #646464;
+    font-size: 15px;
+}
+
+.button{
+    border-radius: 40px;
+    border: 0.5px solid #dedede;
+    transition: all 0.3s ;
+    cursor: pointer;
+    font-size: 13.5px;
+    padding: 8px 15px;
+    color: #757575;
+}
+
+.order_button{
+    border-radius: 40px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    width: 280px;
+    height: 48px;
+    color: white;
+    background-color: #07913A;
+}
+
+.keep_text{
+    color: #00913A;
+}

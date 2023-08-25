@@ -47,4 +47,14 @@ public class MemberService {
         int isDelete = memberInfoRepository.deleteMember(memberUid);
         return isDelete>0 ? true : false;
     }
+
+    public MemberInfo select(String memberUid) {
+        return memberInfoRepository.findByIdNative(memberUid);
+    }
+
+    @Transactional
+    public boolean edit(MemberInfo memberInfo) {
+        int isEdit = memberInfoRepository.editMember(memberInfo);
+        return isEdit>0 ? true : false;
+    }
 }

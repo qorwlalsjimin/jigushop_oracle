@@ -7,16 +7,24 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+import java.util.Date;
+
 public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> {
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO member_info VALUES (:#{#member.memberUid}, :#{#member.memberUpw}, :#{#member.memberName}, :#{#member.phone}, :#{#member.gender}, CURRENT_TIMESTAMP)")
     int saveMemberInfo(@Param("member") MemberInfo member);
 
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE member_info SET member_name=:#{#member.memberName}, phone=:#{#member.phone}, gender=:#{#member.gender} WHERE member_uid=:#{#member.memberUid}")
+    int editMember(MemberInfo member);
+
+
     @Query(nativeQuery = true, value = "SELECT * FROM member_info WHERE member_uid = :memberUid")
     MemberInfo findByIdNative(@Param("memberUid") String memberUid);
-
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM member_info WHERE member_uid = :memberUid")
     int deleteMember(String memberUid);
+
 }

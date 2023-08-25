@@ -24,6 +24,25 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+    //회원정보 조회
+    @GetMapping("/")
+    public MemberInfo select(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        String memberUid = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("MemberloggedIn")) {
+                    memberUid = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        return memberService.select(memberUid);
+    }
+
+
     //로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberLoginForm form){
@@ -43,6 +62,17 @@ public class MemberController {
         boolean isJoin = memberService.join(memberInfo);
 
         if(isJoin)
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //401
+    }
+
+    //회원 정보 수정
+    @PostMapping("/edit")
+    public ResponseEntity<?> edit(@RequestBody MemberInfo memberInfo){
+        boolean isEdit = memberService.edit(memberInfo);
+
+        if(isEdit)
             return ResponseEntity.ok().build();
         else
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //401
