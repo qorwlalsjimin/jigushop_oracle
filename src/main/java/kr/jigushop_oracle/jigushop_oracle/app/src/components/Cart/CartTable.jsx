@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import style from './CartTable.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CartItem from './CartItem';
 
 export default function CartTable() {
     const [cart, setCart] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const cartData = JSON.parse(localStorage.getItem("cart")) || [];
         setCart(cartData);
     }, []);
+
+    // 주문하기 버튼
+    const onOrder = () => {
+        navigate("/order");
+    }
 
     console.log(cart)
 
@@ -54,7 +60,7 @@ export default function CartTable() {
             </Row>
             <Row>
                 <Col className='text-center mt-5'>
-                    <button className={`${style.order_button} mb-3`}>주문하기</button><br />
+                    <button className={`${style.order_button} mb-3`} onClick={onOrder}>주문하기</button><br />
                     <Link to="/" className={style.keep_text}>계속 쇼핑하기</Link>
                 </Col>
             </Row>

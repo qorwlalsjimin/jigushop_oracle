@@ -1,0 +1,32 @@
+.background_gray{
+    background-color: #ededed;
+}
+
+.background_white{
+    background-color: white;
+}
+
+.order_text{
+    font-size: 32px;
+}
+
+
+.option_name{
+    font-size: 16px;
+    color: #20252B;
+}
+
+.option_detail{
+    font-size: 14px;
+    color: #999999;
+}
+
+.title_text{
+    font-size: 22px;
+}
+
+.order_button{
+    background-color: #07913A;
+    color: white;
+    cursor: pointer;
+}
