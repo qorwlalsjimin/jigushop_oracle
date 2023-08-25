@@ -31,7 +31,7 @@ export default function CartTable() {
                     <table className={style.table}>
                         <thead>
                             <tr className='p-2'>
-                                <th className={`${style.th} text-center p-3`}>✅</th>
+                                <th className={`${style.th} text-center p-3`}><input type="checkbox" checked={true} /></th>
                                 <th className={`${style.th} ps-3`}>상품 정보</th>
                                 <th className={`${style.th} text-center`}>수량</th>
                                 <th className={`${style.th} text-center`}>주문금액</th>
@@ -39,10 +39,10 @@ export default function CartTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart && Object.entries(cart).map((item, index) => (
+                            {cart && cart.map((item, index) => (
                                 <CartItem
                                     key={index}
-                                    img={item.img}
+                                    img={item.img.split(',')[0]}
                                     itemName={item.itemName}
                                     option={item.option && Object.entries(item.option).map(([key, value]) => `${key}: ${value}`).join(', ')}
                                     price={item.price}

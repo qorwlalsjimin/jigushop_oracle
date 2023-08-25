@@ -21,12 +21,21 @@
     color: #999999;
 }
 
+.option_price{
+    font-size: 14px;
+}
+
 .title_text{
-    font-size: 22px;
+    font-size: 19px;
 }
 
 .order_button{
     background-color: #07913A;
     color: white;
     cursor: pointer;
+}
+
+.order_price_text{
+    font-size: 16px;
+    color: #999999;
 }

@@ -32,78 +32,93 @@ export default function ItemDetailUpper() {
                 Cookie: Cookies.get('MemberloggedIn')
             }
         })
-            .then(response => {
-                setItem(response.data);
-
-                setCartOptions(()=>({
-                    "itemName": response.data.itemName,
-                    "img": response.data.img,
-                    "price": response.data.price
-                }))
-                
-                if (!response.data.itemOption) {
-                    setSelectedOptions((prevItem) => ({
-                        "수량": 1
-                    }));
-                    setQuantity(quantity + 1);
-
-                    setCartOptions((pre)=>({
-                        ...pre,
-                        "option": {
-                            ...selectedOptions
-                        }
-                    }))
-                    console.log("useEffect", cartOptions)
-                } else {
-                    setSelectedOptions({});
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+        .then(response => {
+            setItem(response.data);
+    
+            // Update cartOptions with initial data
+            setCartOptions({
+                "itemName": response.data.itemName,
+                "img": response.data.img,
+                "price": response.data.price,
+                "option": {} // Initialize option
             });
+    
+            if (!response.data.itemOption) {
+                setSelectedOptions({
+                    "수량": 1
+                });
+                setQuantity(quantity + 1);
+    
+                // Update cartOptions with selectedOptions
+                setCartOptions((pre) => ({
+                    ...pre,
+                    "option": {
+                        ...selectedOptions
+                    }
+                }));
+    
+                console.log("useEffect", cartOptions);
+            } else {
+                setSelectedOptions({});
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
     }, [itemId]);
+    
 
 
     //옵션 선택
     const handleChanges = (event) => {
         const { name, value } = event.target;
-
+    
         setSelectedOptions((prevItem) => {
             if (prevItem.hasOwnProperty(value.trim())) {
                 return prevItem;
             } else {
                 setQuantity(quantity + 1);
-                return {
+                const newSelectedOptions = {
                     ...prevItem,
                     [value.trim()]: 1
                 };
+    
+                // setSelectedOptions 업데이트 후에 setCartOptions 호출
+                setCartOptions((pre)=>({
+                    ...pre,
+                    "option": {
+                        ...newSelectedOptions
+                    }
+                }));
+                console.log("옵션선택", newSelectedOptions, cartOptions);
+    
+                return newSelectedOptions;
             }
         });
-
-        setCartOptions((pre)=>({
-            ...pre,
-            "option": {
-                ...selectedOptions
-            }
-        }))
-        console.log("옵션선택", selectedOptions, cartOptions)
     };
+    
 
-    //수량 조절
-    const handleQuantityChange = (event) => {
-        const newQuantity = parseInt(event.target.value);
-        setSelectedOptions((prevItem) => ({
+//수량 조절
+const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value);
+    setSelectedOptions((prevItem) => {
+        const updatedSelectedOptions = {
             ...prevItem,
             [event.target.name]: newQuantity
-        }));
-        setQuantity(quantity + 1);
+        };
 
-        setCartOptions((pre)=>({
+        // setSelectedOptions 업데이트 후에 setCartOptions 호출
+        setCartOptions((pre) => ({
             ...pre,
-            "option": selectedOptions
-        }))
-        console.log("수량 조절", cartOptions)
-    };
+            "option": updatedSelectedOptions
+        }));
+        
+        setQuantity(quantity + 1);
+        return updatedSelectedOptions;
+    });
+    console.log("수량 조절", selectedOptions, cartOptions.option);
+};
+
 
     // 즐겨찾기
     const handleHeart = async (itemId) => {
@@ -143,9 +158,11 @@ export default function ItemDetailUpper() {
             return;
         }
         console.log("장바구니 추가", cartOptions);
-        navigate('/cart')
+        navigate('/cart');
 
-        localStorage.setItem("cart", JSON.stringify(cartOptions));
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const updatedCart = [...existingCart, cartOptions];
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
 
 
