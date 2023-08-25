@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 export default function ItemDetailUpper() {
     const { itemId } = useParams();
     const [item, setItem] = useState([]);
-    const [quantity, setQuantity] = useState(1); // 상품 갯수 
+    const [quantity, setQuantity] = useState(0); // 상품 갯수 
     const [selectedOptions, setSelectedOptions] = useState({}); // 선택한 옵션과 수량
     const [heartCnt, setHeartCnt] = useState(0); // 선택한 옵션과 수량
     const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
@@ -31,33 +31,53 @@ export default function ItemDetailUpper() {
                 Cookie: Cookies.get('MemberloggedIn')
             }
         })
-            .then(response => {
-                setItem(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-
+        .then(response => {
+            setItem(response.data);
+    
+            console.log(item.itemOption);
+            if (!response.data.itemOption) {
+                setSelectedOptions((prevItem) => ({
+                    "수량": 1
+                }));
+                setQuantity(quantity + 1);
+            }else{
+                setSelectedOptions({});
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+        console.log(selectedOptions)
     }, [itemId]);
+    
 
     //옵션 선택
     const handleChanges = (event) => {
         const { name, value } = event.target;
-
-        setSelectedOptions((prevItem) => ({
-            ...prevItem,
-            [value.trim()]: 1
-        }));
+    
+    
+        setSelectedOptions((prevItem) => {
+            if (prevItem.hasOwnProperty(value.trim())) {
+                return prevItem;
+            } else {
+                setQuantity(quantity + 1);
+                return {
+                    ...prevItem,
+                    [value.trim()]: 1
+                };
+            }
+        });
     };
-
+    
     //옵션 박스
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
         setSelectedOptions((prevItem) => ({
             ...prevItem,
-            [event.target.name]: selectedOptions[event.target.name]+1
+            [event.target.name]: newQuantity
         }));
-        setQuantity((selectedOptions['일반용']||0)+(selectedOptions['어린이용']||0));
+        setQuantity(quantity+1);
+        console.log(selectedOptions)
     };
 
     // 즐겨찾기
@@ -132,45 +152,46 @@ export default function ItemDetailUpper() {
                             <div className="mt-4">
                                 <span className={styles.left_text}>옵션 *</span>
                                 <select className="form-select mt-2" required name="option" onChange={handleChanges}>
-                                    <option disabled value="" selected>옵션을 선택해주세요</option>
+                                    <option value="">옵션을 선택해주세요</option>
                                     {item.itemOption.split(",").map((option, index) => (
                                         <option key={index} value={option}>
                                             {option}
                                         </option>
                                     ))}
                                 </select>
+
                             </div>
                         )}
 
                         {/* 선택한 옵션 박스 */}
-                        {Object.keys(selectedOptions).length > 0 && 
+                        {Object.keys(selectedOptions).length > 0 &&
                             Object.keys(selectedOptions).map((option) => (
-                            <div className={`${styles.option_box} p-3 my-3`}>
-                                <span className={styles.option_title_text}>{option}</span>
-                                <hr className={styles.dot} />
-                                <Row className="justify-content-end">
-                                    <Col>
-                                        <input
-                                            type="number"
-                                            id="quantity"
-                                            name={option}
-                                            value={selectedOptions[option]}
-                                            onChange={handleQuantityChange}
-                                            min="1"
-                                            max="100"
-                                        />
-                                    </Col>
-                                    <Col className={styles.option_price_text}>
-                                        {String(item.price * selectedOptions[option]).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-                                    </Col>
-                                </Row>
-                            </div>)
-                        )}
+                                <div className={`${styles.option_box} p-3 my-3`}>
+                                    <span className={styles.option_title_text}>{option}</span>
+                                    <hr className={styles.dot} />
+                                    <Row className="justify-content-end">
+                                        <Col>
+                                            <input
+                                                type="number"
+                                                id="quantity"
+                                                name={option}
+                                                value={selectedOptions[option]}
+                                                onChange={handleQuantityChange}
+                                                min="1"
+                                                max="100"
+                                            />
+                                        </Col>
+                                        <Col className={styles.option_price_text}>
+                                            {String(item.price * selectedOptions[option]).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+                                        </Col>
+                                    </Row>
+                                </div>)
+                            )}
 
 
                         <Row className="justify-content-end mt-4">
-                            <Col className={styles.total_title_text}>총 상품금액({Object.keys(selectedOptions).length==0 ? 0 : quantity}개)</Col>
-                            <Col className={styles.total_price_text}>{String(item.price * (Object.keys(selectedOptions).length==0 ? 0 : quantity)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Col>
+                            <Col className={styles.total_title_text}>총 상품금액({quantity}개)</Col>
+                            <Col className={styles.total_price_text}>{String(item.price * (Object.keys(selectedOptions).length == 0 ? 0 : quantity)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Col>
                         </Row>
 
                         <Row className="text-center mt-5">
