@@ -28,7 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
                                         "       END heart, " +
                                         "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
                                         "FROM item WHERE item_id = :itemId")
-    List<Object[]> findByIdNative(Long itemId, String memberUid);
+    List<Object[]> findByIdNative(@Param("itemId") Long itemId, @Param("memberUid") String memberUid);
 
 
     @Query(nativeQuery = true, value =  "SELECT * FROM item " +
@@ -63,7 +63,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     void updateBest();
 
     //상품목록에 heart
-    default ItemForm findByIdItemForm(Long itemId, String memberUid) {
+    default ItemForm findByIdItemForm(@Param("itemId") Long itemId, @Param("memberUid") String memberUid) {
         List<Object[]> results = findByIdNative(itemId, memberUid);
         if (results.isEmpty()) {
             return null; // 또는 원하는 기본값으로 처리

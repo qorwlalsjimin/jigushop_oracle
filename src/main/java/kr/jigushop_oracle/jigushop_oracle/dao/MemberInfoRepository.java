@@ -17,7 +17,7 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> 
 
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE member_info SET member_name=:#{#member.memberName}, phone=:#{#member.phone}, gender=:#{#member.gender} WHERE member_uid=:#{#member.memberUid}")
-    int editMember(MemberInfo member);
+    int editMember(@Param("member") MemberInfo member);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM member_info WHERE member_uid = :memberUid")
@@ -25,6 +25,6 @@ public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> 
 
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM member_info WHERE member_uid = :memberUid")
-    int deleteMember(String memberUid);
+    int deleteMember(@Param("memberUid") String memberUid);
 
 }

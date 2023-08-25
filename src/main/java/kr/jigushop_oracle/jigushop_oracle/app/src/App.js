@@ -14,6 +14,8 @@ import AdminChart from './pages/Admin/AdminChart';
 import ItemDetail from './pages/ItemDetail/ItemDetail';
 import SearchList from './pages/ItemList/SearchList';
 import MyPage from './pages/MyPage/MyPage';
+import Order from './pages/Order/Order';
+// import MyPage from './pages/MyPage/MyPage';
 
 function App() {
   return (
@@ -48,6 +50,9 @@ function App() {
 
         {/* 마이페이지 */}
         <Route path="/mypage" element={<MyPage />} />
+
+        {/* 주문페이지 */}
+        <Route path="/order" element={<Order />} />
 
       </Routes>
     </BrowserRouter>

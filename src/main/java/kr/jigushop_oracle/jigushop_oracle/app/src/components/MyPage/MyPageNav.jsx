@@ -9,16 +9,23 @@ import MyPageHeart from './MyPageHeart';
 import styles from './MyPage.module.css';
 import MyPageEdit from './MyPageEdit';
 import MyPageDrop from './MyPageDrop';
+import { useEffect } from 'react';
 
 export default function MyPageNav() {
     const navigate = useNavigate();
     const [menu, setMenu] = useState("order");
-    const [isLogin, setIsLogin] = useState(!!Cookies.get('loggedIn'));
+    const [isLogin, setIsLogin] = useState(!!Cookies.get('MemberloggedIn'));
 
     const handleList = (selectedMenu) => {
         setMenu(selectedMenu);
         console.log(selectedMenu)
     }
+
+    useEffect(() => {
+        console.log(isLogin)
+        if (!isLogin)
+            navigate("/login");
+    }, [isLogin])
 
     return (
         <Container className='my-5'>
