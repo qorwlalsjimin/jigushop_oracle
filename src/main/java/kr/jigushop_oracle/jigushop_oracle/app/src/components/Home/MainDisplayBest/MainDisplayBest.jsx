@@ -62,8 +62,8 @@ export default function MainDisplayBest() {
                     <span className={`${styles.title_text}`}>{item.itemName}</span><br />
                     <span className={styles.price_text}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span><br />
                     <div className='mt-1'>
-                      {item.sale && <span className={`${styles.sale_text} me-1`}>SALE</span>}
-                      {item.best && <span className={`${styles.best_text}`}>BEST</span>}
+                      {item.sale==="1" && <span className={`${styles.sale_text} me-1`}>SALE</span>}
+                      {item.best==="1" && <span className={`${styles.best_text}`}>BEST</span>}
                     </div>
                   </Link>
                 </Col>

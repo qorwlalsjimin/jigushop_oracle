@@ -14,7 +14,6 @@ export default function AdminAddForm() {
         img: "",
         price: "",
         categoryId: 101,
-        best: "0",
         sale: "0"
     };
 
@@ -95,15 +94,6 @@ export default function AdminAddForm() {
                     </Col>
 
                     <Col md={12}>
-                        <input
-                            type="checkbox"
-                            name="best"
-                            checked={item.best === "1"}
-                            onChange={handleChanges}
-                        />
-                        <span> BEST 상품</span>
-                        <br />
-
                         <input
                             type="checkbox"
                             name="sale"

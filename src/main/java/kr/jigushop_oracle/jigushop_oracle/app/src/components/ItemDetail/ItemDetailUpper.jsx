@@ -31,31 +31,32 @@ export default function ItemDetailUpper() {
                 Cookie: Cookies.get('MemberloggedIn')
             }
         })
-        .then(response => {
-            setItem(response.data);
-    
-            console.log(item.itemOption);
-            if (!response.data.itemOption) {
-                setSelectedOptions((prevItem) => ({
-                    "수량": 1
-                }));
-                setQuantity(quantity + 1);
-            }else{
-                setSelectedOptions({});
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+            .then(response => {
+                setItem(response.data);
+                console.log(response.data)
+
+                console.log(item.itemOption);
+                if (!response.data.itemOption) {
+                    setSelectedOptions((prevItem) => ({
+                        "수량": 1
+                    }));
+                    setQuantity(quantity + 1);
+                } else {
+                    setSelectedOptions({});
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
         console.log(selectedOptions)
     }, [itemId]);
-    
+
 
     //옵션 선택
     const handleChanges = (event) => {
         const { name, value } = event.target;
-    
-    
+
+
         setSelectedOptions((prevItem) => {
             if (prevItem.hasOwnProperty(value.trim())) {
                 return prevItem;
@@ -68,7 +69,7 @@ export default function ItemDetailUpper() {
             }
         });
     };
-    
+
     //옵션 박스
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
@@ -76,7 +77,7 @@ export default function ItemDetailUpper() {
             ...prevItem,
             [event.target.name]: newQuantity
         }));
-        setQuantity(quantity+1);
+        setQuantity(quantity + 1);
         console.log(selectedOptions)
     };
 
@@ -110,6 +111,17 @@ export default function ItemDetailUpper() {
         }
     };
 
+    // 장바구니
+    const handleCart = () => {
+
+        if (Object.keys(selectedOptions).length === 0) {
+            alert('옵션을 선택해주세요.');
+            return;
+        }
+        console.log("장바구니 추가", selectedOptions);
+
+        localStorage.setItem("cart", JSON.stringify(selectedOptions));
+    }
 
 
     return (
@@ -130,8 +142,8 @@ export default function ItemDetailUpper() {
                         <div>
                             <span className={`${styles.name_text} me-2`}>[{item.brand}] {item.itemName}</span>
 
-                            {item.sale && <span className={`${styles.sale_text} me-1`}>SALE</span>}
-                            {item.best && <span className={`${styles.best_text}`}>BEST</span>}
+                            {item.sale==="1" && <span className={`${styles.sale_text} me-1`}>SALE</span>}
+                            {item.best==="1" && <span className={`${styles.best_text}`}>BEST</span>}
                         </div>
                         <div>
                             <span>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span>
@@ -196,7 +208,7 @@ export default function ItemDetailUpper() {
 
                         <Row className="text-center mt-5">
                             <Col className={`py-3 me-1 ${styles.green_button}`}>구매하기</Col>
-                            <Col className={`py-3 me-1 ${styles.button}`}>장바구니</Col>
+                            <Col className={`py-3 me-1 ${styles.button}`} onClick={handleCart}>장바구니</Col>
                             <Col className={`py-3  ${styles.button} `} onClick={() => handleHeart(item.itemId)}> {item.heart === "1" ? <HeartSVG /> : <HeartEmptySVG />} <strong>{item.heartCnt}</strong></Col>
                         </Row>
 

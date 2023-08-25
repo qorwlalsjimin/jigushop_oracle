@@ -56,6 +56,11 @@ public class HeartService {
         return itemRepository.findByMember(memberUid);
     }
 
+    @Transactional
+    public void setBest() {
+        itemRepository.updateBest();
+    }
+
 
 //
 //    public boolean login(MemberLoginForm form) {

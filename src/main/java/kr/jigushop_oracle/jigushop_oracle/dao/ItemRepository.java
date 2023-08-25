@@ -55,6 +55,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
                                         "WHERE INSTR(item_name, :keyword) > 0")
     Collection<Item> findByKeyword(@Param("keyword") String keyword);
 
+
+    @Query(nativeQuery = true, value =  "UPDATE item SET best=1 " +
+                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
+                                        "                  GROUP BY item_id " +
+                                        "                  HAVING COUNT(*) >= (SELECT AVG(COUNT(*)) FROM heart_item GROUP BY item_id))")
+    void updateBest();
+
     //상품목록에 heart
     default ItemForm findByIdItemForm(Long itemId, String memberUid) {
         List<Object[]> results = findByIdNative(itemId, memberUid);
@@ -79,5 +86,4 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
         return itemForm;
     }
-
 }

@@ -17,7 +17,6 @@ export default function AdminEditForm({ idProps }) {
         img: "",
         price: "",
         categoryId: "",
-        best: "0",
         sale: "0"
     });
 
@@ -141,14 +140,6 @@ export default function AdminEditForm({ idProps }) {
 
 
                         <Col md={12}>
-                            <input
-                                type="checkbox"
-                                name="best"
-                                checked={item.best === "1"}
-                                onChange={handleChanges}
-                            />
-                            <span> BEST 상품</span>
-                            <br />
 
                             <input
                                 type="checkbox"
