@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class HeartChartForm {
-    Long categoryId;
+    String categoryId;
     Long count;
 }

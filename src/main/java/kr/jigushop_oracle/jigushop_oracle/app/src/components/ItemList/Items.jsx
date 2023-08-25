@@ -134,22 +134,24 @@ export default function Items() {
                                                 onMouseEnter={() => handleMouseEnter(index)}
                                                 onMouseLeave={handleMouseLeave}
                                             />
-                                            <Row className='justify-content-between'>
-                                                <Col>
-                                                    <span className={`${styles.title_text}`}>{item.itemName}</span><br />
-                                                </Col>
-                                                <Col md={2}>
-                                                <div className={styles.pointer} onClick={() => handleHeart(item.itemId)}>
-                                                {heartStatus[item.itemId] ? <HeartSVG /> : <HeartEmptySVG />}
-                                            </div>
-                                                </Col>
-                                            </Row>
+                                            <span className={`${styles.title_text}`}>{item.itemName}</span><br />
                                             <span className={styles.price_text}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span><br />
                                             <div className='mt-1'>
                                                 {item.sale == "1" && <span className={`${styles.sale_text} me-1`}>SALE</span>}
                                                 {item.best == "1" && <span className={`${styles.best_text}`}>BEST</span>}
                                             </div>
                                         </Link>
+                                        <div className='mt-2 d-flex'>
+                                            <div className={`me-2  ${styles.pointer}`}>
+                                                <ReviewSVG /> 
+                                                {/*<span className={styles.cnt_text}>0</span>// */}
+                                            </div>
+
+                                            <div className={styles.pointer} onClick={() => handleHeart(item.itemId)}>
+                                                {heartStatus[item.itemId] ? <HeartSVG /> : <HeartEmptySVG />}
+                                                {/* <span className={styles.cnt_text}>0</span> */}
+                                            </div>
+                                        </div>
                                     </Col>
                                 )
                             })}

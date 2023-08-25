@@ -24,9 +24,9 @@ public interface HeartItemRepository extends JpaRepository<HeartItem, String> {
     void deleteByItem(@Param("heartId") Long heartId, @Param("itemId") Long itemId);
 
 
-    @Query(nativeQuery = true, value =  "SELECT category_id, COUNT(heart_item.item_id) FROM heart_item " +
+    @Query(nativeQuery = true, value =  "SELECT NVL(TO_CHAR(category_id), 'sum'), COUNT(heart_item.item_id) FROM heart_item " +
                                         "RIGHT OUTER JOIN item ON item.item_id = heart_item.item_id " +
-                                        "GROUP BY category_id " +
+                                        "GROUP BY ROLLUP(category_id) " +
                                         "ORDER BY category_id")
     List<Object[]> findCountEntity();
 

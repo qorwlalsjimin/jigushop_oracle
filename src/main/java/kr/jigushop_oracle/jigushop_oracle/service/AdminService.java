@@ -345,7 +345,7 @@ public class AdminService {
 
         for (Object[] row : result) {
             HeartChartForm dto = new HeartChartForm();
-            dto.setCategoryId(Long.parseLong(row[0].toString()));
+            dto.setCategoryId(row[0].toString());
             dto.setCount(Long.parseLong(row[1].toString()));
             chartFormData.add(dto);
         }
