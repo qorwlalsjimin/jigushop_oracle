@@ -24,6 +24,6 @@ public class OrderList {
     @Column
     private Long totalPrice;
     private String orderStatus;
-    private Date order_timestamp;
+    private Date orderTimestamp;
 
 }

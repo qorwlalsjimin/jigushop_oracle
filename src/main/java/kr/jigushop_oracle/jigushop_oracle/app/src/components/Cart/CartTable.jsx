@@ -18,14 +18,12 @@ export default function CartTable() {
         navigate("/order");
     }
 
-    console.log(cart)
-
     return (
         <Container>
             <Row>
                 <Col md={12} className='mb-4'>
                     <span className={`${style.cart_title} me-3`}>장바구니</span>
-                    <span className={`${style.cart_count} rounded px-2`}>1</span>
+                    <span className={`${style.cart_count} rounded px-2`}>{cart.length}</span>
                 </Col>
                 <Col md={12}>
                     <table className={style.table}>

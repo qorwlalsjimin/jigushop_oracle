@@ -1,3 +1,5 @@
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col, Container } from 'reactstrap';
@@ -7,11 +9,35 @@ export default function OrderForm() {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(3000);
     const navigate = useNavigate();
+    const memberUid = Cookies.get('MemberlogginIn');
+
+    const [dataToSend, setDataToSend] = useState({});
 
     useEffect(() => {
         const cartData = JSON.parse(localStorage.getItem("cart")) || [];
         setCart(cartData);
     }, []);
+    
+
+    // API 요청을 보내는 함수
+    const sendCartData = async () => {
+        try {
+            const response = await axios.post('/api/order/add', dataToSend);
+            console.log('API response:', response.data);
+        } catch (error) {
+            console.error('Error sending data:', error);
+        }
+    };
+
+    useEffect(() => {
+        // cart 데이터 변경될 때마다 총 가격 계산
+        const total = cart.reduce((total, item) => {
+            const optionTotal = sumNumbers(Object.values(item.option || []));
+            return total + item.price * optionTotal;
+        }, 3000); // 기본 배송비
+
+        setTotalPrice(total);
+    }, [cart]);
 
     useEffect(() => {
         // cart 데이터 변경될 때마다 총 가격 계산
@@ -28,8 +54,36 @@ export default function OrderForm() {
         return parsedNumbers.reduce((sum, number) => sum + number, 0);
     }
 
+    useEffect(() => {
+        const orderItems = [];
+    
+        for (const cartItem of cart) {
+            const orderItem = {
+                itemId: cartItem.itemId,
+                optionCnt: cartItem.option
+            };
+            orderItems.push(orderItem);
+        }
+
+        const formattedOrderItems = orderItems.map(item => {
+            const options = Object.keys(item.optionCnt).map(key => `${key}: ${item.optionCnt[key]}`).join(', ');
+            return {
+                itemId: item.itemId,
+                optionCnt: options
+            };
+        });
+        
+        setDataToSend((prevData) => ({
+            memberUid: Cookies.get('MemberloggedIn'),
+            totalPrice: totalPrice,
+            orderItems: formattedOrderItems
+        }));
+    }, [totalPrice, cart]);
+
     const onOrder = () => {
-        navigate("/mypage");
+        console.log(dataToSend);
+        sendCartData(); // sendCartData 호출
+        // navigate("/mypage");
     }
 
     return (

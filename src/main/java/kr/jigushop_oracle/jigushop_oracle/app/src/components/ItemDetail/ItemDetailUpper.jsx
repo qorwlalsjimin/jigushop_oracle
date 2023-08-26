@@ -37,6 +37,7 @@ export default function ItemDetailUpper() {
     
             // Update cartOptions with initial data
             setCartOptions({
+                "itemId": itemId,
                 "itemName": response.data.itemName,
                 "img": response.data.img,
                 "price": response.data.price,
@@ -149,22 +150,30 @@ const handleQuantityChange = (event) => {
             window.alert('로그인 후 이용해주세요.');
         }
     };
-
-    // 장바구니
     const handleCart = () => {
-
         if (Object.keys(selectedOptions).length === 0) {
             alert('옵션을 선택해주세요.');
             return;
         }
+    
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+        const isDuplicate = existingCart.some(item => {
+            return item.itemName === cartOptions.itemName;
+        });
+
+        if (isDuplicate) {
+            alert('동일한 상품이 장바구니에 이미 있습니다.');
+            return;
+        }
+    
         console.log("장바구니 추가", cartOptions);
         navigate('/cart');
-
-        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    
         const updatedCart = [...existingCart, cartOptions];
         localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
-
+    
 
     return (
         <>
