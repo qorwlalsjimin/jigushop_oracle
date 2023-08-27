@@ -264,14 +264,14 @@ class Initializer {
 
                 Item.builder()
                         .categoryId(102L)
-                        .itemName("소창 티백")
-                        .brand("소락")
+                        .itemName("나무 요리 젓가락")
+                        .brand("지구샵")
                         .itemOption("")
-                        .itemDesc("플라스틱 FREE! 미세플라스틱 걱정 없이 재사용 가능한 소창티백입니다.")
-                        .img("https://cdn.imweb.me/thumbnail/20211005/bbea082b568a5.jpg, https://cdn.imweb.me/thumbnail/20211005/345e0118e8a9c.jpg, https://cdn.imweb.me/thumbnail/20211005/647067915829c.jpg")
+                        .itemDesc("플라스틱 조리도구를 대체하는 나무 요리 젓가락입니다. 옻칠마감으로 더 오랫동안 사용할 수 있답니다.")
+                        .img("https://cdn.imweb.me/thumbnail/20210911/dd452649486c6.jpg, https://cdn.imweb.me/thumbnail/20210911/ab4d8abf98b96.jpg, https://cdn.imweb.me/thumbnail/20210911/91f441fb6cf92.jpg")
                         .price(3000L)
                         .best('0')
-                        .sale('1')
+                        .sale('0')
                         .build(),
 
 
@@ -381,7 +381,7 @@ class Initializer {
                     .itemOption("M, L")
                     .itemDesc("플라스틱 FREE! 미세플라스틱 걱정 없이 재사용 가능한 소창티백입니다.")
                     .img("https://cdn.imweb.me/thumbnail/20211005/bbea082b568a5.jpg, https://cdn.imweb.me/thumbnail/20211005/bbea082b568a5.jpg, https://cdn.imweb.me/thumbnail/20211005/345e0118e8a9c.jpg")
-                    .price(00L)
+                    .price(1200L)
                     .best('0')
                     .sale('1')
                     .build(),

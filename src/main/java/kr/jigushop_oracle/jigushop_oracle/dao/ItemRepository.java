@@ -41,13 +41,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //상품 상세 페이지
     @Query(nativeQuery = true, value =  "SELECT item_id, category_id, item_name, brand, item_option, item_desc, img, price, best, sale, " +
-            "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
-            "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
-            "            THEN '1' " +
-            "       ELSE '0' " +
-            "       END heart, " +
-            "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
-            "FROM item WHERE item_id = :itemId")
+                                        "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
+                                        "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
+                                        "            THEN '1' " +
+                                        "       ELSE '0' " +
+                                        "       END heart, " +
+                                        "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
+                                        "FROM item WHERE item_id = :itemId")
     List<Object[]> findByIdNative(@Param("itemId") Long itemId, @Param("memberUid") String memberUid);
 
 
@@ -80,6 +80,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     /* 즐겨찾기 */
 
     //즐겨찾기수의 평균보다 높으면 BEST 선정
+    @Modifying
     @Query(nativeQuery = true, value =  "UPDATE item SET best=1 " +
                                         "WHERE item_id IN (SELECT item_id FROM heart_item " +
                                         "                  GROUP BY item_id " +
