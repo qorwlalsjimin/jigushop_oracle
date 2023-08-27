@@ -1,12 +1,27 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import styles from './MyPage.module.css';
 
 export default function MyPageOrder() {
     const navigate = useNavigate();
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        axios.get(`/api/order/mypage`, {
+            headers: {
+                Cookie: Cookies.get('MemberloggedIn')
+            }
+        })
+        .then(response => {
+            setItems(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }, []);
 
     return (
         <Row className='py-5'>
@@ -25,7 +40,7 @@ export default function MyPageOrder() {
                 <Row className={`${styles.center}`}>
                     <Col md={1}><img src="https://cdn.imweb.me/thumbnail/20221029/32d73015877b5.jpg" style={{width: "80px"}} alt="" /></Col>
                     <Col md={5}>
-                        <span className={`${styles.item_title}`}>{`[${"바잇미"}] ${"에코백"}`}</span><br />
+                        <span className={`${styles.item_title}`}>{`[${"에코백"}`}</span><br />
                         <span className={`${styles.item_option}`}>화이트</span><br />
                         <span className={`${styles.item_price}`}>8,900원 / 1개</span><br />
                     </Col>

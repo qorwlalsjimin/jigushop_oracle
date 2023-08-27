@@ -17,33 +17,16 @@ import java.util.stream.Collectors;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    //카테고리별 상품 목록
     @Query(nativeQuery = true, value =  "SELECT * FROM item WHERE category_id = :categoryId")
     List<Item> findAllNative(@Param("categoryId") Long categoryId);
 
-    @Query(nativeQuery = true, value =  "SELECT item_id, category_id, item_name, brand, item_option, item_desc, img, price, best, sale, " +
-                                        "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
-                                        "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
-                                        "            THEN '1' " +
-                                        "       ELSE '0' " +
-                                        "       END heart, " +
-                                        "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
-                                        "FROM item WHERE item_id = :itemId")
-    List<Object[]> findByIdNative(@Param("itemId") Long itemId, @Param("memberUid") String memberUid);
-
-
-    @Query(nativeQuery = true, value =  "SELECT * FROM item " +
-                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
-                                        "                  WHERE heart_id = " +
-                                        "                    (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid) " +
-                                        ")")
-    Collection<Item> findByMember(@Param("memberUid") String memberUid);
-
+    //홈화면 미리보기 상품  TODO 카테고리별로 하나씩, 어떤 기준이 있었으면 함. ex) 사용자들이 즐겨찾기한 수 만큼
     @Query(nativeQuery = true, value =  "SELECT * FROM (" +
                                         "    SELECT * FROM item WHERE best = 1 ORDER BY item_id" +
                                         ") WHERE ROWNUM <= 6")
     Collection<Item> findBest();
 
-    //TODO 카테고리별로 하나씩 했으면 좋겠음.. 어떤 기준이 있었으면 함. ex) 사용자들이 즐겨찾기한 수 만큼
     @Query(nativeQuery = true, value =  "SELECT * FROM (" +
                                         "    SELECT * FROM item WHERE sale = 1 ORDER BY item_id" +
                                         ") WHERE ROWNUM <= 4")
@@ -56,11 +39,17 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Collection<Item> findByKeyword(@Param("keyword") String keyword);
 
 
-    @Query(nativeQuery = true, value =  "UPDATE item SET best=1 " +
-                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
-                                        "                  GROUP BY item_id " +
-                                        "                  HAVING COUNT(*) >= (SELECT AVG(COUNT(*)) FROM heart_item GROUP BY item_id))")
-    void updateBest();
+    //상품 상세 페이지
+    @Query(nativeQuery = true, value =  "SELECT item_id, category_id, item_name, brand, item_option, item_desc, img, price, best, sale, " +
+            "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
+            "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
+            "            THEN '1' " +
+            "       ELSE '0' " +
+            "       END heart, " +
+            "       (SELECT COUNT(*) FROM heart_item WHERE item_id = :itemId) heart_count " +
+            "FROM item WHERE item_id = :itemId")
+    List<Object[]> findByIdNative(@Param("itemId") Long itemId, @Param("memberUid") String memberUid);
+
 
     //상품목록에 heart
     default ItemForm findByIdItemForm(@Param("itemId") Long itemId, @Param("memberUid") String memberUid) {
@@ -86,4 +75,22 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
         return itemForm;
     }
+
+
+    /* 즐겨찾기 */
+
+    //즐겨찾기수의 평균보다 높으면 BEST 선정
+    @Query(nativeQuery = true, value =  "UPDATE item SET best=1 " +
+                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
+                                        "                  GROUP BY item_id " +
+                                        "                  HAVING COUNT(*) >= (SELECT AVG(COUNT(*)) FROM heart_item GROUP BY item_id))")
+    void updateBest();
+
+    //즐겨찾기 상품 확인
+    @Query(nativeQuery = true, value =  "SELECT * FROM item " +
+                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
+                                        "                  WHERE heart_id = " +
+                                        "                    (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid) " +
+                                        ")")
+    Collection<Item> findByMember(@Param("memberUid") String memberUid);
 }

@@ -16,6 +16,5 @@ public interface AdminInfoRepository extends JpaRepository<AdminInfo, String> {
     int saveAdminInfo(@Param("admin") AdminInfo admin);
 
     @Query(nativeQuery = true, value = "SELECT * FROM admin_info WHERE admin_uid = :adminUid")
-
     AdminInfo findByIdNative(@Param("adminUid") String adminUid);
 }

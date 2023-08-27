@@ -3,6 +3,7 @@ package kr.jigushop_oracle.jigushop_oracle.controller;
 import kr.jigushop_oracle.jigushop_oracle.dto.HeartForm;
 import kr.jigushop_oracle.jigushop_oracle.dto.OrderForm;
 import kr.jigushop_oracle.jigushop_oracle.entity.Item;
+import kr.jigushop_oracle.jigushop_oracle.entity.OrderInfoView;
 import kr.jigushop_oracle.jigushop_oracle.service.HeartService;
 import kr.jigushop_oracle.jigushop_oracle.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/order")
@@ -20,26 +22,28 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
-//
-//    //주문 조회
-//    @GetMapping("/items")
-//    public Collection<Item> findAll(HttpServletRequest request){
-//        Cookie[] cookies = request.getCookies();
-//        String memberUid = null;
-//
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("MemberloggedIn")) {
-//                    memberUid = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//
-//        System.out.println("즐겨찾기: 즐겨찾기 조회 "+memberUid);
-//        return heartService.findAll(memberUid);
-//    }
-//
+
+    //주문 조회
+    @GetMapping("/items")
+    public Collection<OrderInfoView> findAll(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String memberUid = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("MemberloggedIn")) {
+                    memberUid = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        // 지금 결과값이 [{orderId=...}, {} ] 이렇게 나오는데 중괄호가 아니라 소괄호여야 함
+        System.out.println("주문: 마이페이지 주문내역 조회 " + memberUid);
+        System.out.println("컨트롤러"+orderService.findOrderMyPage(memberUid));
+        return orderService.findOrderMyPage(memberUid);
+    }
+
+
     //주문 결제
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody OrderForm orderForm){
@@ -61,19 +65,5 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-//
-//    //즐겨찾기 삭제
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<?> delete(@RequestBody HeartForm form){
-//        System.out.println("즐겨찾기: 즐겨찾기 상품 삭제 '"+form.getItemId()+"'");
-//        try{
-//            heartService.delete(form);
-//            heartService.setBest();
-//            return ResponseEntity.ok(form.getItemId());
-//        }catch (Exception e){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//    }
-
 
 }

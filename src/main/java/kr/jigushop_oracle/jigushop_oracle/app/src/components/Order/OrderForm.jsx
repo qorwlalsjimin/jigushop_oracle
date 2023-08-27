@@ -72,7 +72,7 @@ export default function OrderForm() {
                 optionCnt: options
             };
         });
-        
+
         setDataToSend((prevData) => ({
             memberUid: Cookies.get('MemberloggedIn'),
             totalPrice: totalPrice,
@@ -83,7 +83,7 @@ export default function OrderForm() {
     const onOrder = () => {
         console.log(dataToSend);
         sendCartData(); // sendCartData 호출
-        // navigate("/mypage");
+        navigate("/mypage");
     }
 
     return (

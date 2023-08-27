@@ -58,9 +58,6 @@ public class AdminService {
         return adminRepository.deleteByIdNative(id);
     }
 
-    public Category findCategoryById(Long categoryId) {
-        return adminRepository.findCategoryById(categoryId);
-    }
 
 
     public void initialize() {
@@ -340,7 +337,7 @@ public class AdminService {
     }
 
     public List<HeartChartForm> heartChart() {
-        List<Object[]> result = heartItemRepository.findCountEntity();
+        List<Object[]> result = adminRepository.findCountEntity();
         List<HeartChartForm> chartFormData = new ArrayList<>();
 
         for (Object[] row : result) {

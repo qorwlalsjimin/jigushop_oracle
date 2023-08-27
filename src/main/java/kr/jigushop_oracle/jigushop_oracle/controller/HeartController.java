@@ -53,6 +53,7 @@ public class HeartController {
             heartService.setBest();
             return ResponseEntity.ok(form.getItemId());
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
@@ -66,6 +67,7 @@ public class HeartController {
             heartService.setBest();
             return ResponseEntity.ok(form.getItemId());
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
