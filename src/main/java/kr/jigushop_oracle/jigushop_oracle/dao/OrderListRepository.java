@@ -14,7 +14,7 @@ public interface OrderListRepository extends JpaRepository<OrderList, Long> {
 
     // 총 주문 묶음 추가
     @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO order_list VALUES (order_list_seq.NEXTVAL, :#{#form.memberUid}, :#{#form.totalPrice}, '주문완료', CURRENT_TIMESTAMP)")
+    @Query(nativeQuery = true, value = "INSERT INTO order_list(order_id, member_uid, total_price, order_status, order_timestamp) VALUES (order_list_seq.NEXTVAL, :#{#form.memberUid}, :#{#form.totalPrice}, '주문완료', CURRENT_TIMESTAMP)")
     void saveOrder(@Param("form") OrderForm form);
 
     // 가장 최근에 추가된 주문 아이디 조회

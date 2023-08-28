@@ -42,12 +42,9 @@ public class OrderService {
     //주문 조회
     public List<OrderInfoView> findOrderMyPage(String memberUid) {
         List<OrderInfoView> orderInfoList = orderInfoViewRepository.findAllByMember(memberUid);
-//        System.out.println("여기1"+orderInfoViewRepository.test());
-//        System.out.println("여기2"+orderInfoViewRepository.findAllByMember(memberUid));
-        //toString 메서드있으면 잘 출력됨
-
         return orderInfoList;
     }
+
 
 
 

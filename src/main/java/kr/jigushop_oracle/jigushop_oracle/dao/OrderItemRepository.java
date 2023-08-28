@@ -14,7 +14,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     //주문한 상품 추가
     @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO order_item VALUES (order_item_seq.NEXTVAL, :orderId, :#{#form.itemId}, :#{#form.optionCnt})")
+    @Query(nativeQuery = true, value = "INSERT INTO order_item(order_item_id, order_id, item_id, option_cnt) VALUES (order_item_seq.NEXTVAL, :orderId, :#{#form.itemId}, :#{#form.optionCnt})")
     void saveOrderItem(@Param("form") OrderItemForm form, @Param("orderId") Long orderId);
 
 }
