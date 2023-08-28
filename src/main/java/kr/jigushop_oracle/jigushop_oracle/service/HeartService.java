@@ -61,23 +61,4 @@ public class HeartService {
         itemRepository.updateBest();
     }
 
-
-//
-//    public boolean login(MemberLoginForm form) {
-//        MemberInfo dbInfo = memberInfoRepository.findByIdNative(form.getMemberUid());
-//
-//        if(dbInfo == null) return false;
-//        System.out.println(form.getMemberUpw());
-//        System.out.println(dbInfo.getMemberUpw());
-//        if(form.getMemberUpw().equals(dbInfo.getMemberUpw()))
-//            return true;
-//        else
-//            return false;
-//    }
-//
-//    @Transactional
-//    public boolean join(MemberInfo form) {
-//        int isSave = memberInfoRepository.saveMemberInfo(form);
-//        return isSave>0 ? true : false;
-//    }
 }

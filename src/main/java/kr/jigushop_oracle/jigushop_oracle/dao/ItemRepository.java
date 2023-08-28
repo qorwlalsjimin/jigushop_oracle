@@ -81,11 +81,21 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //즐겨찾기수의 평균보다 높으면 BEST 선정
     @Modifying
-    @Query(nativeQuery = true, value =  "UPDATE item SET best=1 " +
-                                        "WHERE item_id IN (SELECT item_id FROM heart_item " +
-                                        "                  GROUP BY item_id " +
-                                        "                  HAVING COUNT(*) >= (SELECT AVG(COUNT(*)) FROM heart_item GROUP BY item_id))")
+    @Query(nativeQuery = true, value =  "UPDATE item  " +
+                                        "SET best = CASE  " +
+                                        "    WHEN item_id IN (  " +
+                                        "        SELECT item_id FROM heart_item  " +
+                                        "        GROUP BY item_id  " +
+                                        "        HAVING COUNT(*) >= (  " +
+                                        "            SELECT AVG(COUNT(*))  " +
+                                        "            FROM heart_item  " +
+                                        "            GROUP BY item_id  " +
+                                        "        )  " +
+                                        "    ) THEN 1  " +
+                                        "    ELSE 0  " +
+                                        "END")
     void updateBest();
+
 
     //즐겨찾기 상품 확인
     @Query(nativeQuery = true, value =  "SELECT * FROM item " +
