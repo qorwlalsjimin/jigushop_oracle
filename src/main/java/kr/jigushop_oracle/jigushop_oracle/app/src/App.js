@@ -2,6 +2,7 @@ import './App.css';
 import Home from './pages/Home/Home';
 import ItemList from './pages/ItemList/ItemList';
 import Board from './pages/Board/Board';
+import BoardDetail from './pages/Board/BoardDetail';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage/LoginPage';
 import JoinPage from './pages/JoinPage/JoinPage';
@@ -15,7 +16,7 @@ import ItemDetail from './pages/ItemDetail/ItemDetail';
 import SearchList from './pages/ItemList/SearchList';
 import MyPage from './pages/MyPage/MyPage';
 import Order from './pages/Order/Order';
-// import MyPage from './pages/MyPage/MyPage';
+import BoardWrite from './pages/Board/BoardWrite';
 
 function App() {
   return (
@@ -53,6 +54,11 @@ function App() {
 
         {/* 주문페이지 */}
         <Route path="/order" element={<Order />} />
+
+        {/* 게시판 */}
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/:id" element={<BoardDetail />} />
+        <Route path="/board/write" element={<BoardWrite />} />
 
       </Routes>
     </BrowserRouter>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Modal } from 'reactstrap';
 import style from './CartTable.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
-export default function CartItem({ img, itemName, option, price }) {
+export default function CartItem({ img, itemName, option, price, handleShow }) {
 
     const extractQuantity = (input) => {
         const matches = input.match(/\d+/g);
@@ -58,7 +58,7 @@ export default function CartItem({ img, itemName, option, price }) {
                 <Row>
                     <Col className='text-center'>
                         <span className={`${style.text} mb-3`}>{extractQuantity(option)}</span><br />
-                        <span className={style.button}>옵션/수량 변경</span>
+                        <span className={style.button} onClick={handleShow}>옵션/수량 변경</span>
                     </Col>
                 </Row>
             </td>

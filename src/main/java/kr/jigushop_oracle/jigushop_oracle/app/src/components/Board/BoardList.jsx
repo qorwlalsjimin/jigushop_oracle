@@ -1,28 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function BoardList() {
-    const exampleData = [
-        // Example data rows, replace with actual data
-        {
-            n_no: 1,
-            title: '예시 제목 1',
-            author: '예시 글쓴이 1',
-            timestamp: '예시 작성시간 1'
-        },
-        {
-            n_no: 2,
-            title: '예시 제목 2',
-            author: '예시 글쓴이 2',
-            timestamp: '예시 작성시간 2'
-        },
-        // Add more data rows as needed
-    ];
+    const [boardData, setBoardData] = useState([]);
+
+    useEffect(() => {
+        // API 요청
+        axios.get('/api/board/')
+            .then(response => {
+                setBoardData(response.data); // 응답 데이터를 state에 설정
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching board data:', error);
+            });
+    }, []);
 
     return (
         <div>
-            <div className="container text-center mt-5 mx-5 px-4">
-                <p className="col align-self-center">문의하기</p>
-            </div>
 
             <div className="notice_list container">
                 <table className="table">
@@ -35,18 +31,18 @@ function BoardList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {exampleData.map((row, index) => (
+                        {boardData.map((row, index) => (
                             <tr key={index}>
-                                <td>{row.n_no}</td>
-                                <td><a href="#" className="text-decoration-none" style={{ color: 'black' }}>{row.title}</a></td>
-                                <td>{row.author}</td>
-                                <td>{row.timestamp}</td>
+                                <td>{row.boardId}</td>
+                                <td><Link to={`/board/${row.boardId}`} className='text-decoration-none text-secondary'>{row.title}</Link></td>
+                                <td>{row.nickname}</td>
+                                <td>{row.boardTimestamp.substr(0, 10)}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
                 <div className="row">
-                    <a className="col text-end text-decoration-none" href="#"><span className="me-5">글쓰기</span></a>
+                    <Link to="/board/write"><span className='float-end'>글쓰기</span></Link>
                 </div>
             </div>
         </div>

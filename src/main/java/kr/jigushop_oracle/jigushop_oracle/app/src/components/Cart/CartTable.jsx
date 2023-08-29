@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Modal, Button } from 'reactstrap';
 import style from './CartTable.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItem from './CartItem';

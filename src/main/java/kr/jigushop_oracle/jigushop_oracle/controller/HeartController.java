@@ -50,7 +50,7 @@ public class HeartController {
         System.out.println("즐겨찾기: 즐겨찾기 상품 등록 '"+form.getItemId()+"'");
         try{
             heartService.add(form);
-            heartService.setBest();
+//            heartService.setBest();
             return ResponseEntity.ok(form.getItemId());
         }catch (Exception e){
             e.printStackTrace();
@@ -63,8 +63,8 @@ public class HeartController {
     public ResponseEntity<?> delete(@RequestBody HeartForm form){
         System.out.println("즐겨찾기: 즐겨찾기 상품 삭제 '"+form.getItemId()+"'");
         try{
+//            heartService.setBest();
             heartService.delete(form);
-            heartService.setBest();
             return ResponseEntity.ok(form.getItemId());
         }catch (Exception e){
             e.printStackTrace();
