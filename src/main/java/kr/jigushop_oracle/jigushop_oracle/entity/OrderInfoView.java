@@ -1,5 +1,6 @@
 package kr.jigushop_oracle.jigushop_oracle.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
@@ -39,18 +40,5 @@ public class OrderInfoView {
 
     @Column(name = "OPTION_CNT")
     private String optionCnt;
-
-    @Override
-    public String toString() {
-        return "{" +
-                "orderId=" + orderId +
-                ", orderTimestamp=" + orderTimestamp +
-                ", orderStatus='" + orderStatus + '\'' +
-                ", totalPrice=" + totalPrice +
-                ", img='" + img + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", optionCnt='" + optionCnt + '\'' +
-                '}';
-    }
 
 }
