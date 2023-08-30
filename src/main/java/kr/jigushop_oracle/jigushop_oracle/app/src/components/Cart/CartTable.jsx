@@ -7,6 +7,9 @@ import CartItem from './CartItem';
 export default function CartTable() {
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [modalData, setModalData] = useState({});
+
 
     useEffect(() => {
         const cartData = JSON.parse(localStorage.getItem("cart")) || [];
@@ -17,6 +20,20 @@ export default function CartTable() {
     const onOrder = () => {
         navigate("/order");
     }
+
+    // 전체 삭제 버튼
+    const onDelete = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
+
+    //모달창
+    const handleClose = () => setShowModal(false);
+    const handleShow = (id) => {
+        console.log(cart[id])
+        setModalData(cart[id]);
+        setShowModal(true)
+    };
 
     return (
         <Container>
@@ -40,20 +57,32 @@ export default function CartTable() {
                             {cart && cart.map((item, index) => (
                                 <CartItem
                                     key={index}
+                                    itemId={item.itemId}
+                                    id={index}
                                     img={item.img.split(',')[0]}
                                     itemName={item.itemName}
                                     option={item.option && Object.entries(item.option).map(([key, value]) => `${key}: ${value}`).join(', ')}
                                     price={item.price}
+                                    handleShow={handleShow}
                                 />
                             ))}
                         </tbody>
                     </table>
                 </Col>
 
+                {cart.length==0 && 
+                    <Container>
+                        <Row>
+                            <Col className='text-center my-5'>
+                                <span><h2>장바구니가 비어있습니다</h2></span>
+                            </Col>
+                        </Row>
+                    </Container>
+                }
+
                 {/* 삭제 버튼 */}
                 <Col className='mt-4'>
-                    <button className={`${style.button} me-2`}>선택상품 삭제</button>
-                    <button className={`${style.button}`}>품절상품 삭제</button>
+                    <button className={`${style.button} me-2`} onClick={onDelete}>전체상품 삭제</button>
                 </Col>
             </Row>
             <Row>

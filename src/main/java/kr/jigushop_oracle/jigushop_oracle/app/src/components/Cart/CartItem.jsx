@@ -4,8 +4,7 @@ import style from './CartTable.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons'
 
-export default function CartItem({ img, itemName, option, price, handleShow }) {
-
+export default function CartItem({ id, itemId, img, itemName, option, price, handleShow }) {
     const extractQuantity = (input) => {
         const matches = input.match(/\d+/g);
         if (!matches) {
@@ -16,6 +15,19 @@ export default function CartItem({ img, itemName, option, price, handleShow }) {
         return sum;
     };
 
+    const handleDelete = (itemId) => {
+        // 로컬스토리지에서 아이템 목록 가져오기
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    
+        // 아이템 삭제를 위해 해당 아이템 찾기
+        const updatedCartItems = cartItems.filter(item => item.itemId !== itemId);
+    
+        // 업데이트된 목록을 로컬스토리지에 저장
+        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+
+        window.location.reload();
+    }
+    
     let optionArr = option.split(',');
 
     return (
@@ -40,17 +52,12 @@ export default function CartItem({ img, itemName, option, price, handleShow }) {
                                     <Col>
                                         <span className={style.option_title}>{filteredOption}개</span>
                                     </Col>
-                                    <Col>
-                                        <span className={style.option_title}>
-                                            <FontAwesomeIcon icon={faX} />
-                                        </span>
-                                    </Col>
                                 </Row>
                             </div>
                         ))}
                     </Col>
                     <Col md={1}>
-                        <span className={style.text}><FontAwesomeIcon icon={faX} /></span>
+                        <span className={`${style.text} ${style.pointer}`}><FontAwesomeIcon icon={faX} onClick={() => handleDelete(itemId)}/></span>
                     </Col>
                 </Row>
             </td>
@@ -58,7 +65,7 @@ export default function CartItem({ img, itemName, option, price, handleShow }) {
                 <Row>
                     <Col className='text-center'>
                         <span className={`${style.text} mb-3`}>{extractQuantity(option)}</span><br />
-                        <span className={style.button} onClick={handleShow}>옵션/수량 변경</span>
+                        <span className={style.button} onClick={() => handleShow(id)}>옵션/수량 변경</span>
                     </Col>
                 </Row>
             </td>

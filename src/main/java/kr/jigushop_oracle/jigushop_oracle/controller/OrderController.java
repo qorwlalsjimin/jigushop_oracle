@@ -37,9 +37,7 @@ public class OrderController {
             }
         }
 
-        // 지금 결과값이 [{orderId=...}, {} ] 이렇게 나오는데 중괄호가 아니라 소괄호여야 함
-        System.out.println("주문: 마이페이지 주문내역 조회 " + memberUid);
-        System.out.println("컨트롤러"+orderService.findOrderMyPage(memberUid));
+        System.out.println("*서비스: "+orderService.findOrderMyPage(memberUid));
         return orderService.findOrderMyPage(memberUid);
     }
 
