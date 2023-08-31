@@ -10,11 +10,8 @@ import java.util.List;
 
 @Repository
 public interface OrderInfoViewRepository extends JpaRepository<OrderInfoView, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM order_info_view WHERE item_name = '칫솔꽂이'")
-    OrderInfoView test();
 
     //주문조회 (노션 수정하기)
-    @Query(nativeQuery = true, value =  "SELECT * FROM order_info_view " +
-                                        "WHERE order_id IN (SELECT order_id FROM order_list WHERE member_uid = :memberUid) ")
+    @Query(nativeQuery = true, value =  "SELECT * FROM order_info_view WHERE order_id IN (SELECT order_id FROM order_list WHERE member_uid = :memberUid)")
     List<OrderInfoView> findAllByMember(@Param("memberUid") String memberUid);
 }

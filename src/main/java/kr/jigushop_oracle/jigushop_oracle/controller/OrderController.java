@@ -9,7 +9,9 @@ import kr.jigushop_oracle.jigushop_oracle.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +39,9 @@ public class OrderController {
             }
         }
 
-        System.out.println("*서비스: "+orderService.findOrderMyPage(memberUid));
+//        System.out.println("*서비스: "+orderService.findOrderMyPage(memberUid).get(1).getItemName());
         return orderService.findOrderMyPage(memberUid);
     }
-
 
     //주문 결제
     @PostMapping("/add")

@@ -11,8 +11,9 @@ import java.util.Date;
 
 @Entity
 @Immutable
-@Subselect("SELECT order_list.ORDER_ID, order_list.ORDER_TIMESTAMP, order_list.ORDER_STATUS, " +
-        "order_list.TOTAL_PRICE, item.IMG, item.ITEM_NAME, order_item.OPTION_CNT " +
+@Subselect("SELECT order_list.ORDER_ID, order_list.ORDER_TIMESTAMP, order_list.ORDER_STATUS, order_list.TOTAL_PRICE, " +
+        "item.IMG, item.ITEM_NAME, item.PRICE, " +
+        "order_item.OPTION_CNT, order_item.ORDER_ITEM_ID " +
         "FROM ORDER_LIST " +
         "JOIN ORDER_ITEM ON order_list.ORDER_ID = order_item.ORDER_ID " +
         "JOIN ITEM ON order_item.ITEM_ID = item.ITEM_ID")
@@ -20,6 +21,9 @@ import java.util.Date;
 public class OrderInfoView {
 
     @Id
+    @Column(name = "ORDER_ITEM_ID")
+    private Long orderItemId;
+
     @Column(name = "ORDER_ID")
     private Long orderId;
 
@@ -31,6 +35,9 @@ public class OrderInfoView {
 
     @Column(name = "TOTAL_PRICE")
     private Long totalPrice;
+
+    @Column(name = "PRICE")
+    private Long price;
 
     @Column(name = "IMG")
     private String img;

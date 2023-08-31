@@ -41,8 +41,9 @@ public class OrderService {
 
     //주문 조회
     public List<OrderInfoView> findOrderMyPage(String memberUid) {
-        List<OrderInfoView> orderInfoList = orderInfoViewRepository.findAllByMember(memberUid);
-        System.out.println("*서비스: "+orderInfoList+" "+memberUid);
+        List<OrderInfoView> orderInfoList = orderInfoViewRepository.findAll();
+//        List<OrderInfoView> orderInfoList = orderInfoViewRepository.findAllByMember(memberUid);
+        System.out.println("*서비스: "+orderInfoList.get(0).getItemName().equals(orderInfoList.get(1).getItemName()));
         return orderInfoList;
     }
 

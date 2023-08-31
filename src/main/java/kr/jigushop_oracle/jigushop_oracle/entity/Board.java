@@ -3,9 +3,7 @@ package kr.jigushop_oracle.jigushop_oracle.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -13,6 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class Board {
     @Id
+    @SequenceGenerator(name = "board_seq", sequenceName = "board_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
 
     @Column(nullable = false)
