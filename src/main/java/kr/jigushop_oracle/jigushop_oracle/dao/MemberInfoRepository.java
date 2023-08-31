@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface MemberInfoRepository extends JpaRepository<MemberInfo, String> {
+
+    //회원 정보 추가
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO member_info VALUES (:#{#member.memberUid}, :#{#member.memberUpw}, :#{#member.memberName}, :#{#member.phone}, :#{#member.gender}, CURRENT_TIMESTAMP)")
     int saveMemberInfo(@Param("member") MemberInfo member);

@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+
+    //카테고리 추가
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO category VALUES(:#{#category.categoryId}, :#{#category.categoryName})")
     List<Item> findAllNative(@Param("category") Category category);

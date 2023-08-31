@@ -14,14 +14,17 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
+    //게시판 글 쓰기
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO board VALUES(board_seq.NEXTVAL, :#{#form.nickname}, :#{#form.title}, :#{#form.content}, CURRENT_TIMESTAMP)")
     int saveBoard(@Param("form") Board form);
 
 
+    //게시판 글 하나 조회
     @Query(nativeQuery = true, value = "SELECT * FROM board WHERE board_id = :boardId")
     Board findOneNative(@Param("boardId") Long boardId);
 
+    //게시판 목록 조회
     @Query(nativeQuery = true, value = "SELECT * FROM board ORDER BY board_timestamp DESC")
     List<Board> findAllNative();
 }

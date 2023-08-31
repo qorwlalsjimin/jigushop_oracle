@@ -21,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(nativeQuery = true, value =  "SELECT * FROM item WHERE category_id = :categoryId")
     List<Item> findAllNative(@Param("categoryId") Long categoryId);
 
-    //홈화면 미리보기 상품  TODO 카테고리별로 하나씩, 어떤 기준이 있었으면 함. ex) 사용자들이 즐겨찾기한 수 만큼
+    //홈화면 미리보기 상품
     @Query(nativeQuery = true, value =  "SELECT * FROM (" +
                                         "    SELECT * FROM item WHERE best = 1 ORDER BY item_id" +
                                         ") WHERE ROWNUM <= 6")
@@ -50,7 +50,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Object[]> findByIdNative(@Param("itemId") Long itemId, @Param("memberUid") String memberUid);
 
 
-    //상품목록에 heart
+    //DTO로 반환하기 위한 처리
     default ItemForm findByIdItemForm(@Param("itemId") Long itemId, @Param("memberUid") String memberUid) {
         List<Object[]> results = findByIdNative(itemId, memberUid);
         if (results.isEmpty()) {
