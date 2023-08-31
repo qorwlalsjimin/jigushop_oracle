@@ -41,8 +41,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //상품 상세 페이지
     @Query(nativeQuery = true, value =  "SELECT item_id, category_id, item_name, brand, item_option, item_desc, img, price, best, sale, " +
-                                        "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item " +
-                                        "                             NATURAL JOIN (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid ))) " +
+                                        "       CASE WHEN(item_id IN (SELECT item_id FROM heart_item NATURAL JOIN heart_list WHERE member_uid = :memberUid)) " +
                                         "            THEN '1' " +
                                         "       ELSE '0' " +
                                         "       END heart, " +
@@ -100,8 +99,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     //즐겨찾기 상품 확인
     @Query(nativeQuery = true, value =  "SELECT * FROM item " +
                                         "WHERE item_id IN (SELECT item_id FROM heart_item " +
-                                        "                  WHERE heart_id = " +
-                                        "                    (SELECT heart_id FROM heart_list WHERE member_uid = :memberUid) " +
-                                        ")")
+                                                                            "NATURAL JOIN heart_list WHERE member_uid = :memberUid)")
     Collection<Item> findByMember(@Param("memberUid") String memberUid);
 }

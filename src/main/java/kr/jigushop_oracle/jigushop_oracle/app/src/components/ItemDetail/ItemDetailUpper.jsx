@@ -167,6 +167,9 @@ const handleQuantityChange = (event) => {
             return;
         }
     
+        if(Object.keys(cartOptions.option).length == 0)
+            cartOptions.option = {수량: 1};
+
         console.log("장바구니 추가", cartOptions);
         navigate('/cart');
     
