@@ -7,9 +7,6 @@ import CartItem from './CartItem';
 export default function CartTable() {
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false);
-    const [modalData, setModalData] = useState({});
-
 
     useEffect(() => {
         const cartData = JSON.parse(localStorage.getItem("cart")) || [];
@@ -26,14 +23,6 @@ export default function CartTable() {
         localStorage.clear();
         window.location.reload();
     }
-
-    //모달창
-    const handleClose = () => setShowModal(false);
-    const handleShow = (id) => {
-        console.log(cart[id])
-        setModalData(cart[id]);
-        setShowModal(true)
-    };
 
     return (
         <Container>
@@ -63,14 +52,13 @@ export default function CartTable() {
                                     itemName={item.itemName}
                                     option={item.option && Object.entries(item.option).map(([key, value]) => `${key}: ${value}`).join(', ')}
                                     price={item.price}
-                                    handleShow={handleShow}
                                 />
                             ))}
                         </tbody>
                     </table>
                 </Col>
 
-                {cart.length==0 && 
+                {cart.length == 0 &&
                     <Container>
                         <Row>
                             <Col className='text-center my-5'>
@@ -91,6 +79,7 @@ export default function CartTable() {
                     <Link to="/" className={style.keep_text}>계속 쇼핑하기</Link>
                 </Col>
             </Row>
+
         </Container>
     );
 }

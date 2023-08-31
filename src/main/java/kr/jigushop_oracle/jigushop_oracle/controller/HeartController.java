@@ -40,6 +40,7 @@ public class HeartController {
             }
         }
 
+        heartService.setBest();
         System.out.println("즐겨찾기: 즐겨찾기 조회 "+memberUid);
         return heartService.findAll(memberUid);
     }
