@@ -3,8 +3,27 @@ import { Row, Col, Modal } from 'reactstrap';
 import style from './CartTable.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react';
 
 export default function CartItem({ id, itemId, img, itemName, option, price }) {
+
+    const [optionArr, setOptionArr] = useState(option.split(','));
+
+    const sumAllNumbersInOptionArr = () => {
+        let totalSum = 0;
+    
+        optionArr.forEach((option) => {
+            const { value } = extractKeyValue(option);
+            const numericValue = parseInt(value);
+            
+            if (!isNaN(numericValue)) {
+                totalSum += numericValue;
+            }
+        });
+    
+        return totalSum;
+    };
+
     const extractQuantity = (input) => {
         const matches = input.match(/\d+/g);
         if (!matches) {
@@ -35,26 +54,27 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
     }
 
     // 수량 조절
-    const [inputValues, setInputValues] = React.useState({});
+        // setInputValues(prevState => ({
+        //     ...prevState,
+        //     [name]: newQuantity // 입력된 값을 정수로 변환하여 저장
+        // }));
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setInputValues(prevState => ({
-            ...prevState,
-            [name]: parseInt(value) // 입력된 값을 정수로 변환하여 저장
-        }));
-        console.log(name, value)
-    };
-
-    const handleInputBlur = (e) => {
-        const { name, value } = e.target;
-        if (isNaN(value) || value.trim() === "") {
-            setInputValues(prevState => ({
-                ...prevState,
-                [name]: inputValues[name]
-            }));
-        }
-    };
+        const handleInputChange = (event) => {
+            const newQuantity = parseInt(event.target.value);
+            const name = event.target.name;
+        
+            const updatedOptionArr = optionArr.map((option) => {
+                if (option.includes(name)) {
+                    const { key } = extractKeyValue(option);
+                    return `${key}: ${newQuantity}`;
+                }
+                return option;
+            });
+        
+            setOptionArr(updatedOptionArr);
+            console.log(optionArr)
+        };
+        
 
     //조절 완료 버튼
     const [isDone, setIsDone] = React.useState(true);
@@ -66,8 +86,6 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
     const handleShow = () => {
         setIsDone(false);
     }
-
-    let optionArr = option.split(',');
 
     return (
         <tr className={`${style.tr}`}>
@@ -104,7 +122,7 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
                 <Row>
                     {isDone ?
                         <Col className='text-center'>
-                            <span className={`${style.text} mb-3`}>{extractQuantity(option)}</span><br />
+                            <span className={`${style.text} mb-3`}>{sumAllNumbersInOptionArr()}</span><br />
                             <span className={style.button} onClick={() => handleShow(id)}>옵션/수량 변경</span>
                         </Col>
                         :
@@ -117,7 +135,16 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
                                         <Row>
                                             <Col>
                                                 <span className={style.option_title}>
-                                                    {key}: <input type="number" name={key} value={value} className='w-25' onChange={handleInputChange} onBlur={handleInputBlur} />
+                                                    {key}:
+                                                    <input
+                                                        type="number"
+                                                        name={key}
+                                                        value={value}
+                                                        className='w-25'
+                                                        onChange={handleInputChange}
+                                                        min="1"
+                                                        max="100"
+                                                    />
                                                 </span>
                                             </Col>
                                         </Row>
