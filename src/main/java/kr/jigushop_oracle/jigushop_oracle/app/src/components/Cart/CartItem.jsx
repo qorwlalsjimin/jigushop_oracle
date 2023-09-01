@@ -11,16 +11,16 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
 
     const sumAllNumbersInOptionArr = () => {
         let totalSum = 0;
-    
+
         optionArr.forEach((option) => {
             const { value } = extractKeyValue(option);
             const numericValue = parseInt(value);
-            
+
             if (!isNaN(numericValue)) {
                 totalSum += numericValue;
             }
         });
-    
+
         return totalSum;
     };
 
@@ -54,34 +54,54 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
     }
 
     // 수량 조절
-        // setInputValues(prevState => ({
-        //     ...prevState,
-        //     [name]: newQuantity // 입력된 값을 정수로 변환하여 저장
-        // }));
+    const handleInputChange = (event) => {
+        const newQuantity = parseInt(event.target.value);
+        const name = event.target.name;
 
-        const handleInputChange = (event) => {
-            const newQuantity = parseInt(event.target.value);
-            const name = event.target.name;
-        
-            const updatedOptionArr = optionArr.map((option) => {
-                if (option.includes(name)) {
-                    const { key } = extractKeyValue(option);
-                    return `${key}: ${newQuantity}`;
-                }
-                return option;
-            });
-        
-            setOptionArr(updatedOptionArr);
-            console.log(optionArr)
-        };
-        
+        const updatedOptionArr = optionArr.map((option) => {
+            if (option.includes(name)) {
+                const { key } = extractKeyValue(option);
+                return `${key}: ${newQuantity}`;
+            }
+            return option;
+        });
+
+        setOptionArr(updatedOptionArr);
+        console.log(optionArr)
+    };
+
 
     //조절 완료 버튼
     const [isDone, setIsDone] = React.useState(true);
 
     const onClickButton = () => {
         setIsDone(true);
-    }
+        const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+
+        //코드 이상함 
+        // 찾고자 하는 아이템의 인덱스를 찾습니다.
+        const itemIndex = cartData.findIndex(item => item.itemId === itemId);
+
+        if (itemIndex !== -1) {
+            // 해당 아이템을 찾았을 경우
+            const updatedItem = { ...cartData[itemIndex] };
+
+            // optionArr 값을 업데이트한 후, option 객체에 반영합니다.
+            updatedItem.option = optionArr.map(option => {
+                const { key } = extractKeyValue(option);
+                const value = parseInt(extractKeyValue(option).value);
+                return { [key]: value };
+            });
+
+            // 해당 아이템을 업데이트한 후, cartData를 업데이트합니다.
+            cartData[itemIndex] = updatedItem;
+
+            // 업데이트된 cartData를 localStorage에 다시 저장합니다.
+            localStorage.setItem("cart", JSON.stringify(cartData));
+        }
+    };
+
+
 
     const handleShow = () => {
         setIsDone(false);
@@ -123,7 +143,7 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
                     {isDone ?
                         <Col className='text-center'>
                             <span className={`${style.text} mb-3`}>{sumAllNumbersInOptionArr()}</span><br />
-                            <span className={style.button} onClick={() => handleShow(id)}>옵션/수량 변경</span>
+                            <span className={style.button} onClick={() => handleShow(id)}>수량 변경</span>
                         </Col>
                         :
                         <Col className='text-center'>

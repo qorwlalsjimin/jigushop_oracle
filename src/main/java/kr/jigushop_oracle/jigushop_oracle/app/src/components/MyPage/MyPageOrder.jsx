@@ -62,7 +62,7 @@ export default function MyPageOrder() {
                                         <Col md={1}><img src={item.img.split(',')[0]} style={{ width: "80px" }} alt="" /></Col>
                                         <Col md={5}>
                                             <span className={`${styles.item_title}`}>{item.itemName}</span><br />
-                                            <span className={`${styles.item_option}`}>{item.optionCnt}원</span><br />
+                                            <span className={`${styles.item_option}`}>{item.optionCnt}</span><br />
                                             <span className={`${styles.item_price}`}>{String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</span><br />
                                         </Col>
                                         <Col md={4}>
