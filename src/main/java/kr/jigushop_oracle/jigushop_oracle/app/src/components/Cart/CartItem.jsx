@@ -77,29 +77,28 @@ export default function CartItem({ id, itemId, img, itemName, option, price }) {
     const onClickButton = () => {
         setIsDone(true);
         const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-
-        //코드 이상함 
-        // 찾고자 하는 아이템의 인덱스를 찾습니다.
+    
         const itemIndex = cartData.findIndex(item => item.itemId === itemId);
-
+    
         if (itemIndex !== -1) {
-            // 해당 아이템을 찾았을 경우
             const updatedItem = { ...cartData[itemIndex] };
-
-            // optionArr 값을 업데이트한 후, option 객체에 반영합니다.
-            updatedItem.option = optionArr.map(option => {
+            
+            // optionArr 값을 업데이트한 후, 객체로 묶어서 option 객체에 반영합니다.
+            const updatedOptions = {};
+            optionArr.forEach(option => {
                 const { key } = extractKeyValue(option);
                 const value = parseInt(extractKeyValue(option).value);
-                return { [key]: value };
+                updatedOptions[key] = value;
             });
-
-            // 해당 아이템을 업데이트한 후, cartData를 업데이트합니다.
+            
+            updatedItem.option = updatedOptions;
+    
             cartData[itemIndex] = updatedItem;
-
-            // 업데이트된 cartData를 localStorage에 다시 저장합니다.
+    
             localStorage.setItem("cart", JSON.stringify(cartData));
         }
     };
+    
 
 
 
